@@ -3,7 +3,8 @@ from connect import Connect
 
 class API:
     api = Connect.VK
-
+    longpoll = Connect.LONGPOLL 
+    
     @staticmethod
     def get_random_id():
         # Вычисляем random_id для предотвращения повторных отправок сообщения
@@ -25,3 +26,7 @@ class API:
         response = API.api.method('users.get', { 'user_id': user_id })[0]
         # Возвращаем имя и фамилию
         return response["first_name"] + ' ' + response["last_name"]
+
+    @staticmethod
+    def groups_isMember(user_id):
+        return API.api.method('groups.isMember', { 'group_id': API.longpoll.group_id, 'user_id': user_id })

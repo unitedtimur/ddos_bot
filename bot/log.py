@@ -11,7 +11,7 @@ class Log:
                             level       = logging.INFO,  
                             format      = '%(asctime)s - %(levelname)s : %(message)s')
         logging.info(information)
-        print(information)
+        #print(str(information) + '\n')
 
     @staticmethod
     def log_crit(critical):
@@ -19,5 +19,5 @@ class Log:
                             level       = logging.CRITICAL,
                             format      = '%(asctime)s - %(levelname)s : %(message)s')
         logging.critical(critical)
-        print(critical)
+        #print(str(critical) + '\n')
         

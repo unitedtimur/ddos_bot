@@ -1,4 +1,4 @@
-import psycopg2
+﻿import psycopg2
 from log import Log
 from parse_configuration import get_value_by_key
 
@@ -13,7 +13,7 @@ class SQL:
 			host="ec2-54-75-244-161.eu-west-1.compute.amazonaws.com", 
 			port="5432")
 		Log.log_info(get_value_by_key('SQL', 'DATABASE_CONNECTED'))
-		# Creating the tables if not exists
+		# Создаём таблицу, если не создана
 		self.__create_table_users()
 
 	def __del__(self):
@@ -57,10 +57,58 @@ class SQL:
 		except Exception as e:
 			Log.log_crit(e)
 
-	def get_rows_from_table(self, table) -> tuple:
+	def del_row_from_user_table(self, row):
 		try:
 			cur = self.con.cursor()
-			cur.execute(f"""SELECT * FROM {table};""")
+			cur.execute(f"""
+				DELETE FROM users WHERE user_id = {row};
+			""")
+			Log.log_info(get_value_by_key('SQL', 'DEL_ROW_FROM_USER_TABLE').format(row))
+		except Exception as e:
+			Log.log_crit(e)
+
+	def del_admin_from_user_table(self, user_id):
+		try:
+			cur = self.con.cursor()
+			cur.execute(f"""
+				UPDATE users SET level = 'user'
+				WHERE user_id = {user_id};
+			""")
+			Log.log_info(get_value_by_key('SQL', 'DEL_ADMIN_FROM_USER_TABLE').format(user_id))
+		except Exception as e:
+			Log.log_crit(e)
+
+	def find_admin(self, user_id):
+		try:
+			cur = self.con.cursor()
+			cur.execute(f"""SELECT level FROM users WHERE user_id = {user_id};""")
+			Log.log_info(get_value_by_key('SQL', 'FIND_ADMIN').format(user_id))
+			return cur.fetchall()
+		except Exception as e:
+			Log.log_crit(e)
+
+	def insert_into_users_if_not_exists(self, user_id):
+		try:
+			cur = self.con.cursor()
+			level = cur.execute(f"""SELECT level FROM users WHERE user_id = {user_id};""")
+			
+			if level:
+				return
+
+			cur.execute(f"""INSERT INTO users VALUES({user_id}, 'user');""")
+			Log.log_info(get_value_by_key('SQL', 'FIND_USER_AND_ADD').format(user_id))
+		except Exception as e:
+			Log.log_crit(e)
+
+	def get_rows_from_table(self, table, level) -> tuple:
+		try:
+			cur = self.con.cursor()
+			if level.lower() == 'all': 
+				cur.execute(f"""SELECT * FROM {table};""")
+			else: 
+				cur.execute(f"""SELECT * FROM {table} WHERE level = '{level}';""")
+
+			Log.log_info(get_value_by_key('SQL', 'GET_ROWS_FROM_TABLE'))
 			return cur.fetchall()
 		except Exception as e:
 			Log.log_crit(e)
