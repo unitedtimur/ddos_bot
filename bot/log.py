@@ -7,11 +7,11 @@ if not os.path.isdir("logs"):
 class Log:
     @staticmethod
     def log_info(information):
-        logging.basicConfig(handlers    = [ logging.FileHandler('logs/system-' + str(date.today()) + '.log', 'a', 'utf-8') ],
-                            level       = logging.INFO,  
-                            format      = '%(asctime)s - %(levelname)s : %(message)s')
-        logging.info(information)
-        #print(str(information) + '\n')
+        #logging.basicConfig(handlers    = [ logging.FileHandler('logs/system-' + str(date.today()) + '.log', 'a', 'utf-8') ],
+        #                    level       = logging.INFO,  
+        #                    format      = '%(asctime)s - %(levelname)s : %(message)s')
+        #logging.info(information)
+        print(str(information) + '\n')
 
     @staticmethod
     def log_crit(critical):
@@ -19,5 +19,5 @@ class Log:
                             level       = logging.CRITICAL,
                             format      = '%(asctime)s - %(levelname)s : %(message)s')
         logging.critical(critical)
-        #print(str(critical) + '\n')
+        print(str(critical) + '\n')
         

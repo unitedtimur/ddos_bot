@@ -14,7 +14,7 @@ class SQL:
 			port="5432")
 		Log.log_info(get_value_by_key('SQL', 'DATABASE_CONNECTED'))
 		# Создаём таблицу, если не создана
-		self.__create_table_users()
+		#self.__create_table_users()
 
 	def __del__(self):
 		self.con.commit()
@@ -30,7 +30,7 @@ class SQL:
 				level VARCHAR(10) NOT NULL
 				);
 			''')
-			Log.log_info(get_value_by_key('SQL', 'TABLE_CREATED').format('users'))
+			Log.log_info(get_value_by_key('SQL', 'TABLE_INITIALIZED').format('users'))
 		except Exception as e:
 			Log.log_crit(e)
 
@@ -88,28 +88,20 @@ class SQL:
 			Log.log_crit(e)
 
 	def insert_into_users_if_not_exists(self, user_id):
-		try:
-			cur = self.con.cursor()
-			level = cur.execute(f"""SELECT level FROM users WHERE user_id = {user_id};""")
-			
-			if level:
-				return
+		with self.con:
+			with self.con.cursor() as cur:
+				cur.execute("SELECT * FROM users WHERE user_id = %s;", (user_id, ))
+				row = cur.fetchall()
+				if len(row) == 0:
+					cur.execute("INSERT INTO users VALUES(%s, %s);", (user_id, 'user'))
+					Log.log_info(get_value_by_key('SQL', 'FIND_USER_AND_ADD').format(user_id))
 
-			cur.execute(f"""INSERT INTO users VALUES({user_id}, 'user');""")
-			Log.log_info(get_value_by_key('SQL', 'FIND_USER_AND_ADD').format(user_id))
-		except Exception as e:
-			Log.log_crit(e)
-
-	def get_rows_from_table(self, table, level) -> tuple:
-		try:
-			cur = self.con.cursor()
-			if level.lower() == 'all': 
-				cur.execute(f"""SELECT * FROM {table};""")
-			else: 
-				cur.execute(f"""SELECT * FROM {table} WHERE level = '{level}';""")
-
-			Log.log_info(get_value_by_key('SQL', 'GET_ROWS_FROM_TABLE'))
-			return cur.fetchall()
-		except Exception as e:
-			Log.log_crit(e)
-			return None
+	def get_rows_from_table(self, level) -> tuple:
+		with self.con:
+			with self.con.cursor() as cur:
+				if level.lower() == 'all':
+					cur.execute("SELECT * FROM users;")
+				else:
+					cur.execute("SELECT * FROM users WHERE level = %s;", (level, ))
+				Log.log_info(get_value_by_key('SQL', 'GET_ROWS_FROM_TABLE'))
+				return cur.fetchall()

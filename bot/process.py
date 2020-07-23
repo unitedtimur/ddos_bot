@@ -1,4 +1,5 @@
 from parse_configuration import get_value_by_key, get_values_by_section
+
 from sql import SQL
 from api import API
 from log import Log
@@ -35,7 +36,7 @@ class Process:
         # Команда вывода списка пользователей
         if args[0] == get_value_by_key('ADMIN_COMMANDS', 'ADMIN_USER_LIST'):
             try:
-                rows = SQL().get_rows_from_table('users', args[1])
+                rows = SQL().get_rows_from_table(args[1])
                 if rows is not None:
                     response = "Список пользователей:\n"
                     for id, lev in rows: response += 'user_id: ' + str(id) + ' level: ' + str(lev) + '\n'
@@ -75,6 +76,23 @@ class Process:
 
         else: 
              API.messages_send(user_id, get_value_by_key('ADMIN_RESPONSE', 'UNKNOWN'))
+
+    @staticmethod
+    def process_user_command(user_id, message):
+        msg = message.split()
+        command = msg[0].lower()
+
+        # Команда /info
+        if command == get_value_by_key('USER_COMMANDS', 'INFO'):
+            API.messages_send(user_id, get_value_by_key('USER_RESPONSE', 'INFO'))
+        elif command == get_value_by_key('USER_COMMANDS', 'DDOS'):
+            if API.is_already_user_id_ddos(user_id):
+                API.messages_send(user_id, get_value_by_key('BOT_ANSWER', 'BOT_USER_ID_ALREADY_DDOS'))
+            else:
+                API.call_ddos_number(user_id, msg[1], int(msg[2]), int(msg[3]))
+                API.messages_send(user_id, get_value_by_key('BOT_ANSWER', 'BOT_DDOS').format(msg[1], msg[2], msg[3]))
+
+
 
     @staticmethod
     def in_user_table(user_id):

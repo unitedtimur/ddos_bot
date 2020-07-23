@@ -15,27 +15,24 @@ class Bot:
         Log.log_info(take_key_value('BOT_CONDITION', 'BOT_STOPPED'))
 
     def process(self, id, msg):
-        user_id     = id
-        message     = msg
-        isCommand   = Process.is_command(message)
-        isAdmin     = Process.is_admin_command(id, message)
-        isMember    = API.groups_isMember(id)
-        
+        user_id         = id
+        message         = msg
         Process.in_user_table(id)
 
-        if isMember== 1:
-            if isAdmin:
-                Log.log_info(get_value_by_key('REQUESTS', 'ADMIN_REQUEST').format(id))
-                admin_process_thread = Thread(target =  Process.process_admin_command, args = (id, message))
+        if API.groups_isMember(id) == 1:
+            if Process.is_admin_command(id, message):
+                Log.log_info(get_value_by_key('REQUESTS', 'ADMIN_REQUEST').format(user_id))
+                admin_process_thread = Thread(target =  Process.process_admin_command, args = (user_id, message))
                 admin_process_thread.start()
-            elif isCommand:
-                Log.log_info(get_value_by_key('REQUESTS', 'USER_COMMAND_REQUEST').format(id))
+            elif Process.is_command(message):
+                Process.process_user_command(user_id, message)
+                Log.log_info(get_value_by_key('REQUESTS', 'USER_COMMAND_REQUEST').format(user_id))
             else:
-                API.messages_send(id, get_value_by_key('BOT_ANSWER', 'UNKNOWN'))
-                Log.log_info(get_value_by_key('REQUESTS', 'USER_UNK_COMMAND_REQUEST').format(id))
+                API.messages_send(user_id, get_value_by_key('BOT_ANSWER', 'UNKNOWN'))
+                Log.log_info(get_value_by_key('REQUESTS', 'USER_UNK_COMMAND_REQUEST').format(user_id))
         else:
-            API.messages_send(id, get_value_by_key('BOT_ANSWER', 'NOT_SUBSCRIBED'))
-            Log.log_info(get_value_by_key('REQUESTS', 'NOT_SUBSCRIBED'))
+            API.messages_send(user_id, get_value_by_key('BOT_ANSWER', 'NOT_SUBSCRIBED').format(user_id))
+            Log.log_info(get_value_by_key('REQUESTS', 'NOT_SUBSCRIBED').format(user_id))
 
 
     def start(self):
