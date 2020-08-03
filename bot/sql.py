@@ -9,7 +9,7 @@ class SQL:
 			user		= os.environ['USER'], 
 			password	= os.environ['PASSWORD'], 
 			host		= os.environ['HOST'], 
-			port		= os.environ['PORT'])
+			port		= "5432")
 
 	def __del__(self):
 		self.con.commit()
