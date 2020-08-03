@@ -21,18 +21,13 @@ class Bot:
 
         if API.groups_isMember(id) == 1:
             if Process.is_admin_command(id, message):
-                Log.log_info(get_value_by_key('REQUESTS', 'ADMIN_REQUEST').format(user_id))
-                admin_process_thread = Thread(target =  Process.process_admin_command, args = (user_id, message))
-                admin_process_thread.start()
+                Process.process_admin_command(user_id, message)
             elif Process.is_command(message):
                 Process.process_user_command(user_id, message)
-                Log.log_info(get_value_by_key('REQUESTS', 'USER_COMMAND_REQUEST').format(user_id))
             else:
                 API.messages_send(user_id, get_value_by_key('BOT_ANSWER', 'UNKNOWN'))
-                Log.log_info(get_value_by_key('REQUESTS', 'USER_UNK_COMMAND_REQUEST').format(user_id))
         else:
             API.messages_send(user_id, get_value_by_key('BOT_ANSWER', 'NOT_SUBSCRIBED').format(user_id))
-            Log.log_info(get_value_by_key('REQUESTS', 'NOT_SUBSCRIBED').format(user_id))
 
 
     def start(self):
