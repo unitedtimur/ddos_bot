@@ -21,3 +21,4 @@ vk-api==11.8.0
 wget==3.2
 wrapt==1.12.1
 psycopg2==2.0.10
+configparser-5.0.0
