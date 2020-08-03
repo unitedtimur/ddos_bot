@@ -1,3 +1,4 @@
+import os
 from vk_api.bot_longpoll import VkBotEventType
 from connect import Connect
 from process import Process
@@ -31,6 +32,8 @@ class Bot:
 
 
     def start(self):
+        API.messages_send(os.environ['ADMIN_ID'], "Bot has been started...")
+
         for event in self.longpoll.listen():
             if event.type == VkBotEventType.MESSAGE_NEW:
                 event_thread = Thread(target = self.process, args = (event.message.from_id, event.message.text))
