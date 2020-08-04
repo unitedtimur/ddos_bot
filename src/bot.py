@@ -1,14 +1,14 @@
 from src.api import get_fullname_by_user_id
 from src.connect import LONGPOLL
+from src.process import Process
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
-from src.sql import SQL
 
 
 class Bot:
-    def __init__(self, longpoll: VkBotLongPoll, db: SQL):
+    def __init__(self, longpoll: VkBotLongPoll, process: Process):
         print("Bot has been started...")
         self.longpoll = longpoll
-        self.db = db
+        self.process = process
 
     def __del__(self):
         print("Bot has been stopped...")
@@ -16,10 +16,9 @@ class Bot:
     def start(self):
         for event in self.longpoll.listen():
             if event.type == VkBotEventType.MESSAGE_NEW:
-                print("New message!")
+                self.process.process(event.message.from_id, event.message.text)
 
 
 if __name__ == "__main__":
-    print(get_fullname_by_user_id(1))
-    bot = Bot(LONGPOLL, SQL())
+    bot = Bot(LONGPOLL, Process())
     bot.start()
