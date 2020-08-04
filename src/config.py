@@ -1,0 +1,1 @@
+levels = ["user", "vip", "admin"]

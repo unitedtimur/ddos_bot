@@ -1,5 +1,7 @@
 import psycopg2
 
+from src import config
+
 
 class SQL:
     def __init__(self):
@@ -35,11 +37,12 @@ class SQL:
             cur.execute(f"SELECT * FROM {table};")
             return cur.fetchall()
 
-    def set_row_to_users(self, row):
-        with self.con, self.con.cursor() as cur:
-            cur.execute(f"SELECT EXISTS(SELECT 1 FROM users WHERE user_id = '{row[0]}');")
-            if cur.fetchone()[0] == False:
-                cur.execute(f"INSERT INTO users(user_id, level) VALUES('{row[0]}', '{row[1]}');")
+    def set_row_to_users(self, user_id: str, level: str):
+        if level.lower() in config.levels:
+            with self.con, self.con.cursor() as cur:
+                cur.execute(f"SELECT EXISTS(SELECT 1 FROM users WHERE user_id = {user_id});")
+                if cur.fetchone()[0] == False:
+                    cur.execute(f"INSERT INTO users(user_id, level) VALUES('{user_id}', '{level.lower()}');")
 
     def del_row_from_users(self, user_id):
         with self.con, self.con.cursor() as cur:
@@ -52,3 +55,16 @@ class SQL:
     def del_row_from_white_list(self, number):
         with self.con, self.con.cursor() as cur:
             cur.execute(f"DELETE FROM white_list WHERE number LIKE '{number}';")
+
+    def change_level_in_users(self, user_id: str, newlevel: str):
+        if newlevel.lower() in config.levels:
+            with self.con, self.con.cursor() as cur:
+                cur.execute(f"UPDATE users SET level = '{newlevel.lower()}' WHERE user_id = {user_id};")
+
+    def get_rows_from_users(self, level: str):
+        with self.con, self.con.cursor() as cur:
+            if level.lower() in config.levels:
+                cur.execute(f"SELECT * FROM users WHERE level LIKE '{level.lower()}';")
+            else:
+                cur.execute("SELECT * FROM users;")
+            return cur.fetchall()

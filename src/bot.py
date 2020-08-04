@@ -1,3 +1,4 @@
+from src.api import get_fullname_by_user_id
 from src.connect import LONGPOLL
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from src.sql import SQL
@@ -19,5 +20,6 @@ class Bot:
 
 
 if __name__ == "__main__":
+    print(get_fullname_by_user_id(1))
     bot = Bot(LONGPOLL, SQL())
     bot.start()
