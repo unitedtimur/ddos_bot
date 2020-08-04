@@ -61,10 +61,15 @@ class SQL:
             with self.con, self.con.cursor() as cur:
                 cur.execute(f"UPDATE users SET level = '{newlevel.lower()}' WHERE user_id = {user_id};")
 
-    def get_rows_from_users(self, level: str):
+    def get_rows_from_users(self, level: str = "all"):
         with self.con, self.con.cursor() as cur:
             if level.lower() in config.levels:
                 cur.execute(f"SELECT * FROM users WHERE level LIKE '{level.lower()}';")
             else:
                 cur.execute("SELECT * FROM users;")
             return cur.fetchall()
+
+    def get_user_from_users(self, user_id: str):
+        with self.con, self.con.cursor() as cur:
+            cur.execute(f"SELECT * FROM users WHERE user_id = {user_id};")
+            return cur.fetchone()
