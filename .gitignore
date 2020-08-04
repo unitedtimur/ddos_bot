@@ -17,3 +17,5 @@ bot/Impulse/tools/SMS/__pycache__/
 .vscode/
 
 .idea/
+
+venv/
