@@ -1,11 +1,8 @@
 
-.vscode/
+.vs
+bot/__pycache__
 
-bot/__pycache__/
-
-.vs/
-
-logs/
+bot/Impulse/__pycache__/
 
 bot/Impulse/tools/__pycache__/
 
@@ -13,8 +10,8 @@ bot/Impulse/tools/addons/__pycache__/
 
 bot/Impulse/tools/addons/twilight/__pycache__/
 
-bot/Impulse/__pycache__/
-
 bot/Impulse/tools/EMAIL/__pycache__/
 
 bot/Impulse/tools/SMS/__pycache__/
+
+.vscode/
