@@ -15,3 +15,5 @@ bot/Impulse/tools/EMAIL/__pycache__/
 bot/Impulse/tools/SMS/__pycache__/
 
 .vscode/
+
+.idea/
