@@ -34,7 +34,7 @@ class SQL:
 
     def get_rows_from_table(self, table: str):
         with self.con, self.con.cursor() as cur:
-            cur.execute(f"SELECT * FROM {table};")
+            cur.execute(f"SELECT * FROM {table} ORDER BY user_id;")
             return cur.fetchall()
 
     def set_row_to_users(self, user_id: str, level: str):
@@ -73,3 +73,18 @@ class SQL:
         with self.con, self.con.cursor() as cur:
             cur.execute(f"SELECT * FROM users WHERE user_id = {user_id};")
             return cur.fetchone()
+
+    def update_level(self, user_id: str, level: str) -> bool:
+        with self.con, self.con.cursor() as cur:
+            if level not in config.levels: return False
+            cur.execute(f"SELECT * FROM users WHERE user_id = {user_id};")
+            if cur.fetchone() is None: return True
+            cur.execute(f"UPDATE users SET level = '{level}' WHERE user_id = {user_id};")
+            return True
+
+    def is_exists_number(self, number: str) -> bool:
+        with self.con, self.con.cursor() as cur:
+            cur.execute(f"SELECT * FROM white_list WHERE number LIKE 'number';")
+            print(cur.fetchone())
+            if cur.fetchone() is None: return False
+            return True

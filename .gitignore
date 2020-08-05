@@ -1,3 +1,15 @@
 .idea
 venv/
 src/__pycache__/
+
+src/Impulse/tools/SMS/__pycache__/
+
+src/Impulse/tools/EMAIL/__pycache__/
+
+src/Impulse/tools/__pycache__/
+
+src/Impulse/tools/addons/__pycache__/
+
+src/Impulse/tools/addons/twilight/__pycache__/
+
+src/Impulse/__pycache__/

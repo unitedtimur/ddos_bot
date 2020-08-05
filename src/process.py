@@ -3,6 +3,7 @@ from enum import Enum
 from src import config
 from src.admin_process import Admin_Process
 from src.sql import SQL
+from src.user_process import User_Process
 
 
 class Level(Enum):
@@ -15,25 +16,32 @@ class Process:
     def __init__(self):
         self.sql = SQL()
         self.admin_process = Admin_Process(self.sql)
+        self.user_process = User_Process(self.sql)
 
     def process(self, user_id, message):
-        command = self.what_command(message)
-        # If user is admin and entered admin command
-        if self.is_level(user_id, 'admin') and command == Level.ADMIN:
-            self.admin_process.process(user_id, message)
-            print(f"Admin request from {user_id}")
-        # If user or admin and entered user command
-        elif (self.is_level(user_id, 'user') or self.is_level(user_id, 'admin')) and command == Level.USER:
-            print(f"User request from {user_id}")
+        id = user_id
+        msg = message.lower()
+        level = self.get_level(id)
+
+        # If user is admin
+        if level == "admin":
+            self.admin_process.process(id, msg)
+            print(f"Admin request from {id}")
+        # If user
+        elif level == "user":
+            self.user_process.process(id, msg)
+            print(f"User requst from {id}")
+        # If user is vip
+        elif level == "vip_1":
+            print(f"Vip request from {id}")
         else:
             print("Unknown command")
 
     # Check user level
-    def is_level(self, user_id, level: str):
+    def get_level(self, user_id):
         user = self.sql.get_user_from_users(user_id)
-        if not user: return False
-        if user[1] == level: return True
-        return False
+        if not user: return "unknown"
+        return user[1]
 
     # Check entered command
     def what_command(self, message) -> Level:
