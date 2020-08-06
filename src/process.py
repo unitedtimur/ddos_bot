@@ -2,7 +2,6 @@ from enum import Enum
 
 from src import config
 from src.admin_process import Admin_Process
-from src.sql import SQL
 from src.user_process import User_Process
 
 
@@ -14,7 +13,7 @@ class Level(Enum):
 
 class Process:
     def __init__(self):
-        self.sql = SQL()
+        self.sql = None
         self.admin_process = Admin_Process(self.sql)
         self.user_process = User_Process(self.sql)
 
