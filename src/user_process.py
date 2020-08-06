@@ -1,6 +1,6 @@
 from src import config
 from src.api import messages_send
-from src.sql import SQL
+from src.sql.models import SQL
 
 
 class User_Process:

@@ -13,3 +13,5 @@ src/Impulse/tools/addons/__pycache__/
 src/Impulse/tools/addons/twilight/__pycache__/
 
 src/Impulse/__pycache__/
+
+src/sql/__pycache__/

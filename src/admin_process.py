@@ -2,7 +2,7 @@ from src import config
 from src.api import *
 from src.functionality import call_ddos_number, parse_number
 from src.levels import Admin_Level as admLvl
-from src.sql import SQL
+from src.sql.models import SQL
 
 
 class Admin_Process:
