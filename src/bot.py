@@ -16,9 +16,18 @@ class Bot:
     def start(self):
         for event in self.longpoll.listen():
             if event.type == VkBotEventType.MESSAGE_NEW:
-                self.process.process(event.message.from_id, event.message.text)
+                pass
+                #self.process.process(event.message.from_id, event.message.text)
 
+
+
+from src.sql.operations import *
 
 if __name__ == "__main__":
+    init_database_connection()
+    add_user(3, 'Timur', 'Likhomanov', 'admin')
+    add_number(2, '+79631961603')
+    print(get_blacklist())
     bot = Bot(LONGPOLL, Process())
     bot.start()
+
