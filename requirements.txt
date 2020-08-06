@@ -1,0 +1,5 @@
+configparser==5.0.0
+psycopg2==2.8.5
+vk-api==11.8.0
+colorama==0.4.3
+humanfriendly==8.2
