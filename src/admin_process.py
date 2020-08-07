@@ -11,6 +11,7 @@ class Admin_Process:
 
     def process(self, user_id, message):
         args = message.split()
+
         if len(args) < 2:
             messages_send(user_id, "Неверно переданы аргументы. Попробуйте снова.")
             return
