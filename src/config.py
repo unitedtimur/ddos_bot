@@ -10,6 +10,60 @@ general_command_args = { "ddos": "ddos", "add_w": "add_w" }
 vip_command = "/vip"
 user_command = "/user"
 
+available_commands = {
+    'admin' : {
+        '/ddos' : {
+            '-t'  : ('time', 1),
+            '-th' : ('threads', 1),
+            '-n'  : ('number', 1)
+        },
+        '/bl'   : {
+            '-l'   : ('command', 0),
+            '-add' : ('command', 1),
+            '-del' : ('command', 1)
+        },
+        '/info' : {
+            '-h'    : ('command', 0),
+            '-bl'   : ('command', 0),
+            '-ddos' : ('command', 0)
+        }
+    },
+    'vip'   : {
+        '/ddos': {
+            '-t': ('time', 1),
+            '-th': ('threads', 1),
+            '-n': ('number', 1)
+        },
+        '/bl': {
+            '-l': ('command', 0),
+            '-add': ('command', 1),
+            '-del': ('command', 1)
+        },
+        '/info': {
+            '-h': ('command', 0),
+            '-bl': ('command', 0),
+            '-ddos': ('command', 0)
+        }
+    },
+    'user'  : {
+        '/ddos' : {
+            '-t'  : ('time', 1),
+            '-n'  : ('number', 1)
+        },
+        '/info' : {
+            '-h'    : ('command', 0),
+            '-ddos' : ('command', 0)
+        }
+    }
+}
+
+standard_limits = {
+    'dtime': 40, #макс ддос время в секундах
+    'th'   : 15, #макс потоков
+    'atks' : 3,  #макс атак в день
+    'bl'   : 2   #макс номеров в черном списке
+}
+
 HelpMessage = '''
 /ddos -- команда для ddos
 =====================
@@ -19,6 +73,7 @@ HelpMessage = '''
 =====================
 /bl -- команда для списка номеров, запрещенных для ddos
 =====================
+-l
 -add номер -- добавить номер телефона в список
 -del номер -- удалить номер телефона из списка
 =====================
@@ -29,74 +84,3 @@ HelpMessage = '''
 -ddos -- показать номера, находящиеся под ddos
 =====================
 '''
-
-class PrivilageLvl(ENUM):
-    ADMIN = 1,
-    USER = 2,
-    VIP = 3,
-    UNKNOWN = 4
-
-    def toPrivLvl(plevel: str):
-        plevel = plevel.lower()
-
-        if plevel == 'admin':
-            return ADMIN
-        elif plevel == 'user':
-            return USER
-        elif plevel == 'vip':
-            return VIP
-        else:
-            return UNKNOWN
-
-class GenCommands(ENUM):
-    INFO = 1,
-    DDOS = 2,
-    BL = 3,
-    UNKNOWN = 4
-
-    def toGenCommands(pcommand: str):
-        pcommand = pcommand.lower()
-        pcommand = pcommand.replace('/', '').replace('\\', '')
-
-        if pcommand == 'info':
-            return INFO
-        elif pcommand == 'ddos':
-            return DDOS
-        elif pcommand == 'bl':
-            return BL
-        else:
-            return UNKNOWN
-
-class SubCommands(ENUM):
-    TIME = 1,
-    PNUM = 2,
-    THREAD = 3,
-    ADD = 4,
-    DEL = 5,
-    HELP = 6,
-    BL = 7,
-    DDOS = 8,
-    UNKNOWWN = 9
-
-    def toSubCommands(pcommand: str):
-        pcommand = pcommand.lower()
-        pcommand = pcommand.replace('-', '')
-
-        if pcommand == 't':
-            return TIME
-        elif pcommand == 'n':
-            return PNUM
-        elif pcommand == 'th':
-            return THREAD
-        elif pcommand == 'add':
-            return ADD
-        elif pcommand == 'del':
-            return DEL
-        elif pcommand == 'h':
-            return HELP
-        elif pcommand == 'bl':
-            return BL
-        elif pcommand == 'ddos':
-            return DDOS
-        else:
-            return UNKNOWN
