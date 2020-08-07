@@ -9,6 +9,7 @@ def init_database_connection():
         BlackList.create_table()
         print("Database has been initialized...")
         print("Users and black_list tables has been initialized...")
+        commit()
     except peewee.InternalError as px:
         db.rollback()
         print(str(px))
@@ -88,6 +89,7 @@ def rem_number(user_id, number) -> bool:
         rollback()
         return False
 
+
 def get_users() -> list:
     """
     Return the list of users {id : name : surname : privilege}
@@ -95,11 +97,12 @@ def get_users() -> list:
     try:
         users = Users.select()
         res = [f"{user.user_id} {user.name} {user.surname} {user.privilege}" for user in users]
-        return res
         commit()
+        return res
     except Exception:
         rollback()
         return None
+
 
 def get_blacklist(isUnique: bool = True) -> dict:
     """
@@ -112,11 +115,12 @@ def get_blacklist(isUnique: bool = True) -> dict:
             for row in users_bl: res[f"{row.user_id}"] = row.number
         else:
             res = [f"{row.user_id} {row.number}" for row in users_bl]
-        return res
         commit()
+        return res
     except Exception:
         rollback()
         return None
+
 
 def get_user(user_id):
     """
@@ -124,8 +128,22 @@ def get_user(user_id):
     """
     try:
         user = Users.select().where(Users.user_id == user_id)[0]
-        return f"{user.user_id} {user.name} {user.surname} {user.privilege}"
         commit()
+        return f"{user.user_id} {user.name} {user.surname} {user.privilege}"
     except Exception:
         rollback()
         return None
+
+
+def get_number(user_id):
+    """
+    Return a number or numbers
+    """
+    try:
+        numbers = BlackList.select().where(BlackList.user_id == user_id)
+        res = [f"{number.user_id} {number.number}" for number in numbers]
+        commit()
+        return res
+    except Exception:
+        rollback()
+        return list()

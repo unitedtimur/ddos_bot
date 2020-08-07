@@ -25,7 +25,7 @@ from src.sql.operations import *
 
 if __name__ == "__main__":
     init_database_connection()
-    print(get_user(1))
+    print(get_number(1))
     bot = Bot(LONGPOLL, Process())
     bot.start()
 
