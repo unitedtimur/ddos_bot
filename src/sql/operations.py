@@ -99,7 +99,7 @@ def get_users() -> list:
         commit()
     except Exception:
         rollback()
-        return False
+        return None
 
 def get_blacklist(isUnique: bool = True) -> dict:
     """
@@ -116,4 +116,16 @@ def get_blacklist(isUnique: bool = True) -> dict:
         commit()
     except Exception:
         rollback()
-        return False
+        return None
+
+def get_user(user_id):
+    """
+    Return an user from users table with by user_id
+    """
+    try:
+        user = Users.select().where(Users.user_id == user_id)[0]
+        return f"{user.user_id} {user.name} {user.surname} {user.privilege}"
+        commit()
+    except Exception:
+        rollback()
+        return None

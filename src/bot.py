@@ -25,9 +25,7 @@ from src.sql.operations import *
 
 if __name__ == "__main__":
     init_database_connection()
-    add_user(3, 'Timur', 'Likhomanov', 'admin')
-    add_number(2, '+79631961603')
-    print(get_blacklist())
+    print(get_user(1))
     bot = Bot(LONGPOLL, Process())
     bot.start()
 
