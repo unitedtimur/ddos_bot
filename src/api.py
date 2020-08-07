@@ -1,7 +1,5 @@
 import random
 
-from vk_api import vk_api
-
 from src import connect
 
 API = connect.VK
