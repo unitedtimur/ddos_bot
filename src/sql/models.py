@@ -26,3 +26,11 @@ class BlackList(BaseModel):
     class Meta:
         db_table = "black_list"
         order_by = ("user_id",)
+
+class DdosNumberList(BaseModel):
+    user_id = IntegerField(null=False)
+    number = CharField(20, null=False)
+
+    class Meta:
+        db_table = "ddos_number_list"
+        order_bt = ("user_id",)

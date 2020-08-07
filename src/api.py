@@ -22,3 +22,4 @@ def get_fullname_by_user_id(user_id):
 
 def messages_send(user_id, message):
     API.method('messages.send', {'user_id': user_id, 'random_id': get_random_id(), 'message': message})
+
