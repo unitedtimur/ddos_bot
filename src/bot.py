@@ -1,7 +1,9 @@
-from src.api import get_fullname_by_user_id
+from src.api import *
 from src.connect import LONGPOLL
 from src.process import Process
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
+
+from src.sql.initializing import init_database_connection
 
 
 class Bot:
@@ -16,16 +18,13 @@ class Bot:
     def start(self):
         for event in self.longpoll.listen():
             if event.type == VkBotEventType.MESSAGE_NEW:
-                pass
+                print("New message!")
                 #self.process.process(event.message.from_id, event.message.text)
 
 
 
-from src.sql.operations import *
-
 if __name__ == "__main__":
     init_database_connection()
-    print(get_number(1))
     bot = Bot(LONGPOLL, Process())
     bot.start()
 
