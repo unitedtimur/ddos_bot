@@ -25,3 +25,11 @@ def parse_number(number: str) -> str:
         return number[1:]
     else:
         return number
+
+def process_bl(user_id, command: str, number:str):
+    #todo
+    pass
+
+def send_info(user_id, command : str):
+    #todo
+    pass
