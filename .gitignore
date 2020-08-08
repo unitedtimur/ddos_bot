@@ -1,19 +1,21 @@
 .idea
 venv/
-src/__pycache__/
+lib/__pycache__/
 
-src/Impulse/tools/SMS/__pycache__/
+lib/Impulse/tools/SMS/__pycache__/
 
-src/Impulse/tools/EMAIL/__pycache__/
+lib/Impulse/tools/EMAIL/__pycache__/
 
-src/Impulse/tools/__pycache__/
+lib/Impulse/tools/__pycache__/
 
-src/Impulse/tools/addons/__pycache__/
+lib/Impulse/tools/addons/__pycache__/
 
-src/Impulse/tools/addons/twilight/__pycache__/
+lib/Impulse/tools/addons/twilight/__pycache__/
 
-src/Impulse/__pycache__/
+lib/Impulse/__pycache__/
 
-src/sql/__pycache__/
+sql/__pycache__/
 
 .vs/ddos_bot/v16/
+
+__pycache__/

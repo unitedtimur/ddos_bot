@@ -1,5 +1,5 @@
-from src.sql.models import BlackList
-from src.sql.operations import commit, rollback
+from ddos_bot.sql.models import BlackList
+from ddos_bot.sql.operations import commit, rollback
 
 
 def add_number(user_id, number) -> bool:

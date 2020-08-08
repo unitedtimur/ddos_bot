@@ -1,6 +1,6 @@
 from peewee import *
 
-db = PostgresqlDatabase("bot-test", user='postgres', password="masterkey", host="localhost", port=5432)
+db = PostgresqlDatabase("bot-test", user='postgres', password="masterkey", host="localhost", port=5433)
 
 
 class BaseModel(Model):
@@ -26,6 +26,7 @@ class BlackList(BaseModel):
     class Meta:
         db_table = "black_list"
         order_by = ("user_id",)
+
 
 class DdosNumberList(BaseModel):
     user_id = IntegerField(null=False)
