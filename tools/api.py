@@ -1,7 +1,7 @@
 import random
 
-from ddos_bot.tools import connect
-from ddos_bot.tools.connect import LONGPOLL
+from tools import connect
+from tools.connect import LONGPOLL
 
 API = connect.VK
 POLL = LONGPOLL

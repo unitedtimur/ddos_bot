@@ -1,6 +1,6 @@
 import peewee
-from ddos_bot.sql.models import *
-from ddos_bot.sql.operations import *
+from sql.models import *
+from sql.operations import *
 
 
 def init_database_connection():

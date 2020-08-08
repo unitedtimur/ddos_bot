@@ -1,4 +1,4 @@
-from ddos_bot.settings import config
+from settings import config
 
 
 class Permission:
