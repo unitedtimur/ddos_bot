@@ -1,17 +1,22 @@
-from src import config
-from src.permission import *
-from src.functionality import *
+from ddos_bot.processing.permission import *
+from ddos_bot.sql.users_table import get_privilege, get_user, add_user
+from ddos_bot.tools.api import messages_send, get_fullname_by_user_id
+from ddos_bot.tools.functionality import call_ddos_number, process_bl, send_info
+
 
 class ReqProcess:
 
     def process(self, user_id, message : str):
+        name, surname = get_fullname_by_user_id(user_id)
+        if get_user(user_id) is None:
+            add_user(user_id, name, surname, 'user')
 
-        #todo запросить статус
-        user_permission = Permission('blabla')
-        args = message.split()
+        # TODO make this wonderful
+        privilege = get_privilege(user_id)
+        user_permission = Permission(privilege)
+        args = message.lower().strip().split()
         target = None
-        command_args = {}
-        sub_commands = None
+
 
         if args[0] in user_permission.available_commands:
             general_command = args[0]
@@ -39,11 +44,12 @@ class ReqProcess:
             messages_send(user_id, "Неверно переданы аргументы. Попробуйте снова.")
             return
 
+        global size
         size = len(args)
         ok = True
         for i in range(size, 1, 2):
-            global size
-            global ok
+            size
+            ok
 
             if args[i] in sub_commands:
 

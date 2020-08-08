@@ -1,7 +1,7 @@
 # Import modules
-import Impulse.tools.addons.twilight.xor as Xor
-import Impulse.tools.addons.twilight.salt as Salt
-import Impulse.tools.addons.twilight.hash as Hash
+import ddos_bot.lib.Impulse.tools.addons.twilight.xor as Xor
+import ddos_bot.lib.Impulse.tools.addons.twilight.salt as Salt
+import ddos_bot.lib.Impulse.tools.addons.twilight.hash as Hash
 
 # Encrypt function
 def Encrypt(text, key):

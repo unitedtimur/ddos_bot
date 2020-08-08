@@ -1,8 +1,8 @@
 import threading
 from threading import Thread
 
-from src.Impulse.impulse import api_flood, threads_ddos
-from src.api import messages_send
+from ddos_bot.lib.Impulse.impulse import api_flood, threads_ddos
+from ddos_bot.tools.api import messages_send
 
 
 def call_ddos_number(user_id: str, number: str, time: int, threads: int):
