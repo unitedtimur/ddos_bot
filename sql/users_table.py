@@ -1,5 +1,5 @@
-from src.sql.models import Users, db
-from src.sql.operations import commit, rollback
+from ddos_bot.sql.models import Users, db
+from ddos_bot.sql.operations import commit, rollback
 
 
 def add_user(user_id, name, surname, privilege) -> bool:
@@ -34,7 +34,7 @@ def rem_user(user_id) -> bool:
         return False
 
 
-def get_users() -> list:
+def get_users() -> list or None:
     """
     Return the list of users {id : name : surname : privilege}
     """
@@ -48,7 +48,7 @@ def get_users() -> list:
         return None
 
 
-def get_user(user_id):
+def get_user(user_id) -> str or None:
     """
     Return an user from users table with by user_id
     """
@@ -56,6 +56,18 @@ def get_user(user_id):
         user = Users.select().where(Users.user_id == user_id)[0]
         commit()
         return f"{user.user_id} {user.name} {user.surname} {user.privilege}"
+    except Exception:
+        rollback()
+        return None
+
+def get_privilege(user_id) -> str or None:
+    """
+    Return the privilege from users table by user_id
+    """
+    try:
+        user = Users.select().where(Users.user_id == user_id)[0]
+        commit()
+        return str(user.privilege)
     except Exception:
         rollback()
         return None

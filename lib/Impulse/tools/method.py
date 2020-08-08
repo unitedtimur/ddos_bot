@@ -2,9 +2,11 @@
 from time import time, sleep
 from threading import Thread
 from colorama import Fore
-from humanfriendly import format_timespan, Spinner
-from Impulse.tools.crash import CriticalError
-from Impulse.tools.ipTools import GetTargetAddress, InternetConnectionCheck
+from humanfriendly import format_timespan
+from humanfriendly.terminal.spinners import Spinner
+
+from ddos_bot.lib.Impulse.tools.crash import CriticalError
+from ddos_bot.lib.Impulse.tools.ipTools import GetTargetAddress, InternetConnectionCheck
 
 """ Find & import ddos method """
 

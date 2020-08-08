@@ -4,9 +4,10 @@ import sys
 import argparse
 
 # Go to current dir
+from ddos_bot.lib.Impulse.tools.method import AttackMethod
+
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-from Impulse.tools.method import AttackMethod
 
 def api_flood(number, time, threads):
     # Run ddos attack

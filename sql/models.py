@@ -27,6 +27,7 @@ class BlackList(BaseModel):
         db_table = "black_list"
         order_by = ("user_id",)
 
+
 class DdosNumberList(BaseModel):
     user_id = IntegerField(null=False)
     number = CharField(20, null=False)

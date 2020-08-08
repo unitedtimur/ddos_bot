@@ -1,9 +1,8 @@
 import threading
 from threading import Thread
 
-from src.Impulse.impulse import api_flood, threads_ddos
-from src.api import messages_send
-from src.connect import VK
+from ddos_bot.lib.Impulse.impulse import api_flood, threads_ddos
+from ddos_bot.tools.api import messages_send
 
 
 def call_ddos_number(user_id: str, number: str, time: int, threads: int):
@@ -25,3 +24,13 @@ def parse_number(number: str) -> str:
         return number[1:]
     else:
         return number
+
+
+def process_bl(user_id, command: str, number: str):
+    # todo
+    pass
+
+
+def send_info(user_id, command: str):
+    # todo
+    pass
