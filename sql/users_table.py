@@ -1,5 +1,5 @@
-from ddos_bot.sql.models import Users, db
-from ddos_bot.sql.operations import commit, rollback
+from sql.models import Users, db
+from sql.operations import commit, rollback
 
 
 def add_user(user_id, name, surname, privilege) -> bool:

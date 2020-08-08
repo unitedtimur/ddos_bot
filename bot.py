@@ -1,8 +1,8 @@
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
-from ddos_bot.processing.request_process import ReqProcess
-from ddos_bot.sql.initializing import init_database_connection
-from ddos_bot.tools.connect import LONGPOLL
+from processing.request_process import ReqProcess
+from sql.initializing import init_database_connection
+from tools.connect import LONGPOLL
 
 
 class Bot:

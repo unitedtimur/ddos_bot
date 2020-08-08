@@ -1,6 +1,6 @@
 from peewee import *
 
-from ddos_bot.settings.access import postgres
+from settings.access import postgres
 
 db = PostgresqlDatabase(database=postgres['database'],
                         user=postgres['user'],

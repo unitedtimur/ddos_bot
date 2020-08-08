@@ -1,10 +1,10 @@
 from time import sleep
 
-from ddos_bot.processing.permission import *
-from ddos_bot.processing.verification import *
-from ddos_bot.sql.users_table import get_privilege, get_user, add_user
-from ddos_bot.tools.api import messages_send, get_fullname_by_user_id
-from ddos_bot.tools.functionality import call_ddos_number, process_bl, send_info
+from processing.permission import *
+from processing.verification import *
+from sql.users_table import get_privilege, get_user, add_user
+from tools.api import messages_send, get_fullname_by_user_id
+from tools.functionality import call_ddos_number, process_bl, send_info
 
 
 class ReqProcess:

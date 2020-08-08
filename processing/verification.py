@@ -1,5 +1,5 @@
-from ddos_bot.sql.users_table import get_user, add_user
-from ddos_bot.tools.api import *
+from sql.users_table import get_user, add_user
+from tools.api import *
 
 
 def is_group_member(user_id) -> bool:

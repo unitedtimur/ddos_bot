@@ -5,8 +5,8 @@ from colorama import Fore
 from humanfriendly import format_timespan
 from humanfriendly.terminal.spinners import Spinner
 
-from ddos_bot.lib.Impulse.tools.crash import CriticalError
-from ddos_bot.lib.Impulse.tools.ipTools import GetTargetAddress, InternetConnectionCheck
+from lib.Impulse.tools.crash import CriticalError
+from lib.Impulse.tools.ipTools import GetTargetAddress, InternetConnectionCheck
 
 """ Find & import ddos method """
 
