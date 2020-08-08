@@ -1,4 +1,7 @@
+from time import sleep
+
 from ddos_bot.processing.permission import *
+from ddos_bot.processing.verification import *
 from ddos_bot.sql.users_table import get_privilege, get_user, add_user
 from ddos_bot.tools.api import messages_send, get_fullname_by_user_id
 from ddos_bot.tools.functionality import call_ddos_number, process_bl, send_info
@@ -7,11 +10,12 @@ from ddos_bot.tools.functionality import call_ddos_number, process_bl, send_info
 class ReqProcess:
 
     def process(self, user_id, message : str):
-        name, surname = get_fullname_by_user_id(user_id)
-        if get_user(user_id) is None:
-            add_user(user_id, name, surname, 'user')
+        # Add user to table if not
+        exists_user(user_id)
+        # If user is not a group member
+        if not is_group_member(user_id):
+            messages_send(user_id, "Чтобы использователь возможности бота Вам нужно подписаться ;)")
 
-        # TODO make this wonderful
         privilege = get_privilege(user_id)
         user_permission = Permission(privilege)
         args = message.lower().strip().split()

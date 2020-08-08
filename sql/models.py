@@ -1,6 +1,12 @@
 from peewee import *
 
-db = PostgresqlDatabase("bot-test", user='postgres', password="masterkey", host="localhost", port=5433)
+from ddos_bot.settings.access import postgres
+
+db = PostgresqlDatabase(database=postgres['database'],
+                        user=postgres['user'],
+                        password=postgres['password'],
+                        host=postgres['host'],
+                        port=postgres['port'])
 
 
 class BaseModel(Model):

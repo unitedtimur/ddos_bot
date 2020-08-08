@@ -17,13 +17,11 @@ class Bot:
     def start(self):
         for event in self.longpoll.listen():
             if event.type == VkBotEventType.MESSAGE_NEW:
-                print("New message!")
                 self.process.process(event.message.from_id, event.message.text)
-
+                print(f"New message from {event.message.from_id}")
 
 
 if __name__ == "__main__":
     init_database_connection()
     bot = Bot(LONGPOLL, ReqProcess())
     bot.start()
-

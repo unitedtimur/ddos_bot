@@ -9,7 +9,7 @@ def add_user(user_id, name, surname, privilege) -> bool:
     """
     try:
         Users.create(user_id=user_id,
-                     name=name.lower().strip(),
+                     name=name,
                      surname=surname,
                      privilege=privilege.lower().strip())
         commit()

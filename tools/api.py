@@ -1,9 +1,10 @@
 import random
 
 from ddos_bot.tools import connect
+from ddos_bot.tools.connect import LONGPOLL
 
 API = connect.VK
-
+POLL = LONGPOLL
 
 def get_random_id():
     # Вычисляем random_id для предотвращения повторных отправок сообщения
@@ -13,9 +14,9 @@ def get_random_id():
 def get_fullname_by_user_id(user_id) -> tuple:
     try:
         response = API.method('users.get', {'user_ids': user_id})[0]
+        return (response["first_name"], response['last_name'])
     except Exception:
         return ('unknown',)
-    return (response["first_name"], response['last_name'])
 
 
 def messages_send(user_id, message):
