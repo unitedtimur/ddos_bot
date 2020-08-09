@@ -95,6 +95,10 @@ class Process:
                 API.messages_send(user_id, "На этот номер невозможно произвести атаку!")
                 return
 
+            if int(msg[2]) > 100:
+            	API.messages_send(user_id, "У вас нет привилегий, чтобы производить ddos атаку более 100 секунд!\nПриобритите подписку VK DONUTS.")
+            	return
+
             if API.is_already_user_id_ddos(user_id):
                 API.messages_send(user_id, get_value_by_key('BOT_ANSWER', 'BOT_USER_ID_ALREADY_DDOS'))
             else:

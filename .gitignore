@@ -15,3 +15,21 @@ bot/Impulse/tools/EMAIL/__pycache__/
 bot/Impulse/tools/SMS/__pycache__/
 
 .vscode/
+
+lib/__pycache__/
+
+lib/Impulse/__pycache__/
+
+lib/Impulse/tools/__pycache__/
+
+lib/Impulse/tools/addons/twilight/__pycache__/
+
+lib/Impulse/tools/EMAIL/__pycache__/
+
+processing/__pycache__/
+
+settings/__pycache__/
+
+sql/__pycache__/
+
+tools/__pycache__/
