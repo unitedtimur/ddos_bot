@@ -1,11 +1,10 @@
-# Import modules
 from time import time, sleep
 from threading import Thread
 from humanfriendly import format_timespan
 from humanfriendly.terminal.spinners import Spinner
 
 from lib.Impulse.tools.crash import CriticalError
-from lib.Impulse.tools.ipTools import GetTargetAddress, InternetConnectionCheck
+from lib.Impulse.tools.ipTools import GetTargetAddress
 
 """ Find & import ddos method """
 
@@ -65,7 +64,7 @@ class AttackMethod:
 
     # Run flooder
     def __RunFlood(self):
-        while self.is_running and Shit.get_threads()['228322']:
+        while self.is_running: # TODO SHIT HERE
             self.method(self.target)
 
     # Start threads

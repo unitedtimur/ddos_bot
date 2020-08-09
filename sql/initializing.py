@@ -9,6 +9,7 @@ def init_database_connection():
         Users.create_table()
         BlackList.create_table()
         DdosNumberList.create_table()
+        DdosActivity.create_table()
         print("Database has been initialized...")
         print("Tables has been initialized...")
         commit()
