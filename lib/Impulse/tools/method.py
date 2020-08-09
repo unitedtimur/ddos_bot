@@ -13,7 +13,7 @@ from lib.Impulse.tools.ipTools import GetTargetAddress, InternetConnectionCheck
 
 def GetMethodByName(method):
     if method == "SMS":
-        dir = "Impulse.tools.SMS.main"
+        dir = "lib.Impulse.tools.SMS.main"
     elif method == "EMAIL":
         dir = "tools.EMAIL.main"
     elif method in ("SYN", "UDP", "NTP", "POD", "ICMP", "MEMCACHED"):

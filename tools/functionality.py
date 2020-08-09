@@ -10,6 +10,7 @@ def call_ddos_number(user_id: str, number: str, time: int, threads: int):
     threads_ddos[user_id].start()
     clear_thread = threading.Timer(time, __end_ddos_attack, [user_id, number])
     clear_thread.start()
+    messages_send(user_id, f'DDOS атака на номер {number} начата.')
 
 
 def __end_ddos_attack(user_id: str, number: str):

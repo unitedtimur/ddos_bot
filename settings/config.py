@@ -13,14 +13,13 @@ user_command = "/user"
 available_commands = {
     'admin' : {
         '/ddos' : {
-            '-t'  : ('time', 1),
-            '-th' : ('threads', 1),
-            '-n'  : ('number', 1)
+            '-t'  : ('time', 1, float('inf')),
+            '-th' : ('threads', 1, float('inf')),
+            '-n'  : ('number', 1, -1)
         },
         '/bl'   : {
-            '-l'   : ('command', 0),
-            '-add' : ('command', 1),
-            '-del' : ('command', 1)
+            '-add' : ('command', 1, -1),
+            '-del' : ('command', 1, -1)
         },
         '/info' : {
             '-h'    : ('command', 0),
@@ -30,14 +29,13 @@ available_commands = {
     },
     'vip'   : {
         '/ddos': {
-            '-t': ('time', 1),
-            '-th': ('threads', 1),
-            '-n': ('number', 1)
+            '-t': ('time', 1, 3600),
+            '-th': ('threads', 1, 100),
+            '-n': ('number', 1, -1)
         },
         '/bl': {
-            '-l': ('command', 0),
-            '-add': ('command', 1),
-            '-del': ('command', 1)
+            '-add': ('command', 1, -1),
+            '-del': ('command', 1, -1)
         },
         '/info': {
             '-h': ('command', 0),
@@ -47,8 +45,8 @@ available_commands = {
     },
     'user'  : {
         '/ddos' : {
-            '-t'  : ('time', 1),
-            '-n'  : ('number', 1)
+            '-t'  : ('time', 1, 150),
+            '-n'  : ('number', 1, -1)
         },
         '/info' : {
             '-h'    : ('command', 0),

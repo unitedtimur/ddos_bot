@@ -2,7 +2,7 @@
 import json
 import requests
 from colorama import Fore
-import Impulse.tools.SMS.randomData as randomData
+import lib.Impulse.tools.SMS.randomData as randomData
 
 
 # Read services file
