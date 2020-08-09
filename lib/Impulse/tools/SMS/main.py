@@ -1,6 +1,6 @@
 # Import modules
-import Impulse.tools.SMS.sendRequest as request
-import Impulse.tools.SMS.randomData as randomData
+import lib.Impulse.tools.SMS.sendRequest as request
+import lib.Impulse.tools.SMS.randomData as randomData
 
 __services = request.getServices()
 

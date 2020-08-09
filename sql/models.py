@@ -40,4 +40,12 @@ class DdosNumberList(BaseModel):
 
     class Meta:
         db_table = "ddos_number_list"
-        order_bt = ("user_id",)
+        order_by = ("user_id",)
+
+class DdosActivity(BaseModel):
+    user_id = IntegerField(null=False)
+    number = CharField(20, null=False)
+
+    class Meta:
+        db_table = "ddos_activity"
+        order = ("user_id",)
