@@ -3,6 +3,7 @@ from threading import Thread
 from humanfriendly import format_timespan
 from humanfriendly.terminal.spinners import Spinner
 
+from lib.Impulse.tools.SMS.main import flood
 from lib.Impulse.tools.crash import CriticalError
 from lib.Impulse.tools.ipTools import GetTargetAddress
 
@@ -46,7 +47,7 @@ class AttackMethod:
         self.target = target
         self.threads = []
         self.is_running = False
-        self.method = GetMethodByName(self.name)
+        self.method = flood
         self.target = GetTargetAddress(self.target_name, self.name)
 
     # Destructor
