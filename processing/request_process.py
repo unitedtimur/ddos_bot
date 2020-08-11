@@ -1,13 +1,8 @@
-from inspect import signature
-from time import sleep
-
 from processing.permission import *
 from processing.verification import *
 from settings.response_info import *
-from sql.users_table import get_privilege, get_user, add_user
-from tools.api import messages_send, get_fullname_by_user_id
-from tools.functionality import call_ddos_number
-
+from sql.users_table import get_privilege
+from tools.api import messages_send
 
 class ReqProcess:
 

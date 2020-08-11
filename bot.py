@@ -1,21 +1,19 @@
-import threading
-
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
 from processing.request_process import ReqProcess
 from sql.initializing import init_database_connection
+from tools.admin_panel import bot_started
 from tools.connect import LONGPOLL
-from tools.functionality import call_ddos_number, stop_ddos_number, ddos_dict
 
 
 class Bot:
     def __init__(self, longpoll: VkBotLongPoll, process: ReqProcess):
-        print("Bot has been started...")
+        bot_started()
         self.longpoll = longpoll
         self.process = process
 
     def __del__(self):
-        print("Bot has been stopped...")
+        bot_stopped()
 
     def start(self):
         for event in self.longpoll.listen():
