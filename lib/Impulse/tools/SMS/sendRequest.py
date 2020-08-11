@@ -1,18 +1,17 @@
 # Import modules
 import json
 import requests
-from colorama import Fore
 import lib.Impulse.tools.SMS.randomData as randomData
 
 
 # Read services file
-def getServices(file="tools/SMS/services.json"):
+def getServices(file="lib/Impulse/tools/SMS/services.json"):
     with open(file, "r", encoding="utf-8", errors="ignore") as services:
         return json.load(services)["services"]
 
 
 # Read proxy list
-def getProxys(file="tools/SMS/proxy.json"):
+def getProxys(file="lib/Impulse/tools/SMS/proxy.json"):
     with open(file, "r") as proxys:
         return json.load(proxys)["proxy"]
 
@@ -117,16 +116,16 @@ class Service:
             request = request.prepare()
             r = session.send(request, timeout=self.timeout, proxies=self.proxy)
         except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectTimeout):
-            print(f"[CONNECTION TIMED OUT] {error}")
+            pass
         except requests.exceptions.ConnectionError:
-            print(f"[CONNECTION ERROR] {error}")
+            pass
         except Exception as err:
-            print(err)
+            pass
         else:
             # Check status
             if r.status_code == 200:
-                print(f"[SUCCESS] {okay}")
+                pass
             elif r.status_code == 429:
-                print(f"[TOO MANY REQUESTS] {error}")
+                pass
             else:
-                print(f"[{r.status_code}] {error}")
+                pass
