@@ -2,7 +2,7 @@ from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
 from processing.request_process import ReqProcess
 from sql.initializing import init_database_connection
-from tools.admin_panel import bot_started
+from tools.admin_panel import bot_started, bot_stopped
 from tools.connect import LONGPOLL
 
 
