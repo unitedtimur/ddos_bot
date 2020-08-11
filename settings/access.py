@@ -10,5 +10,5 @@ postgres = {
 
 vk = {
     'token': os.environ['TOKEN'],
-    'group_id': os.environ['GROUP_ID']
+    'group_id': str(os.environ['GROUP_ID'])
 }
