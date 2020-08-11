@@ -4,4 +4,3 @@ vk-api==11.8.0
 colorama==0.4.3
 humanfriendly==8.2
 peewee==3.13.3
-twisted
