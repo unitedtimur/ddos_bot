@@ -4,7 +4,7 @@ import socket
 import ipaddress
 import requests
 from urllib.parse import urlparse
-from Impulse.tools.EMAIL.emailTools import ReadSenderEmail
+from lib.Impulse.tools.EMAIL.emailTools import ReadSenderEmail
 from time import sleep
 from colorama import Fore
 

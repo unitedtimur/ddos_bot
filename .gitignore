@@ -1,20 +1,24 @@
+.idea
+venv/
+lib/__pycache__/
 
-.vs
-bot/__pycache__
+lib/Impulse/tools/SMS/__pycache__/
 
-bot/Impulse/__pycache__/
+lib/Impulse/tools/EMAIL/__pycache__/
 
-bot/Impulse/tools/__pycache__/
+lib/Impulse/tools/__pycache__/
 
-bot/Impulse/tools/addons/__pycache__/
+lib/Impulse/tools/addons/__pycache__/
 
-bot/Impulse/tools/addons/twilight/__pycache__/
+lib/Impulse/tools/addons/twilight/__pycache__/
 
-bot/Impulse/tools/EMAIL/__pycache__/
+lib/Impulse/__pycache__/
 
-bot/Impulse/tools/SMS/__pycache__/
+sql/__pycache__/
 
-.vscode/
+.vs/ddos_bot/v16/
+
+__pycache__/
 
 lib/__pycache__/
 

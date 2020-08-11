@@ -5,8 +5,7 @@ import json
 from colorama import Fore
 from getpass import getpass, getuser
 from smtplib import SMTPAuthenticationError, SMTP
-# https://github.com/LimerBoy/Twilight-Algoritm
-from Impulse.tools.addons.twilight.twilight import Decrypt, Encrypt
+from lib.Impulse.tools.addons.twilight.twilight import Decrypt, Encrypt
 
 # File with login data
 sender_email_database = "tools/EMAIL/sender.json"

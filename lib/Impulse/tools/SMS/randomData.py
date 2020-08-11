@@ -22,7 +22,7 @@ def random_service(list):
 
 # Create random name
 def random_name():
-    with open("tools/SMS/names.json", "r") as names:
+    with open("lib/Impulse/tools/SMS/names.json", "r") as names:
         names = json.load(names)["names"]
     return random.choice(names)
 
@@ -57,6 +57,6 @@ def random_token():
 
 # Get random user agent
 def random_useragent():
-    with open("tools/SMS/user_agents.json", "r") as agents:
+    with open("lib/Impulse/tools/SMS/user_agents.json", "r") as agents:
         user_agents = json.load(agents)["agents"]
     return random.choice(user_agents)
