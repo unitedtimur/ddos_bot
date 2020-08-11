@@ -41,3 +41,4 @@ class DdosNumberList(BaseModel):
     class Meta:
         db_table = "ddos_number_list"
         order_by = ("user_id",)
+
