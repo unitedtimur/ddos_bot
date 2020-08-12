@@ -1,14 +1,15 @@
 import os
 
+
 postgres = {
     'database': os.environ['DATABASE'],
     'user': os.environ['USER'],
     'password': os.environ['PASSWORD'],
     'host': os.environ['HOST'],
-    'port': os.environ['PORT']
+    'port': int(os.environ['PORT_DB'])
 }
 
 vk = {
     'token': os.environ['TOKEN'],
-    'group_id': os.environ['GROUP_ID']
+    'group_id': str(os.environ['GROUP_ID'])
 }
