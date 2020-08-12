@@ -50,7 +50,7 @@ def get_ddos_numbers_by_user_id(user_id) -> dict or None:
 def parse_number(number: str) -> str or None:
     if number.startswith('+8') and len(number) == 12:
         return None
-    elif number.startswith('+'):
+    elif number.startswith('+') and len(number) > 11:
         return number[1:]
     else:
         return None

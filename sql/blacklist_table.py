@@ -67,3 +67,16 @@ def get_number(user_id):
     except Exception:
         rollback()
         return list()
+
+def get_numbers() -> list:
+    """
+    Return list of numbers
+    """
+    try:
+        numbers = BlackList.select()
+        list = []
+        for num in numbers: list.append(num.number)
+        return list
+        commit()
+    except Exception:
+        rollback()
