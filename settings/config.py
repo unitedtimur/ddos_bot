@@ -1,3 +1,5 @@
+from enum import Enum
+
 available_commands = {
     'admin': {
         'ddos': {
@@ -58,5 +60,254 @@ available_commands = {
             'rem': float("inf"),
             'ls': 1
         }
+    }
+}
+
+commands_config = {
+    'admin' : {
+        '/ddos' :
+        ({
+            't': {
+                'name' : 'time',
+                'anum' : 1,
+                'atype': int,
+                'lim'  : float('inf')
+            },
+            'n': {
+                'name' : 'number',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            },
+            'stop': {
+                'name' : 'stop',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            }
+        }, float('inf')),
+        '/bl':
+        ({
+            'add': {
+                'name' : 'command',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            },
+            'del': {
+                'name' : 'command',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            }
+        }, float('inf')),
+        '/info':
+        ({
+            'h': {
+                'name' : 'command',
+                'anum' : 0
+            },
+            'bl': {
+                'name' : 'command',
+                'anum' : 0
+            },
+            'ddos': {
+                'name' : 'command',
+                'anum' : 0
+            },
+        }, float('inf'))
+    },
+    'vip_1': {
+        '/ddos':
+        ({
+            't': {
+                'name' : 'time',
+                'anum' : 1,
+                'atype': int,
+                'lim'  : 3600
+            },
+            'n': {
+                'name' : 'number',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            },
+            'stop': {
+                'name' : 'stop',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            }
+        }, 50),
+        '/bl':
+        ({
+            'add': {
+                'name' : 'command',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            },
+            'del': {
+                'name' : 'command',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            }
+        }, float('inf')),
+        '/info':
+        ({
+            'h': {
+                'name' : 'command',
+                'anum' : 0
+            },
+            'bl': {
+                'name' : 'command',
+                'anum' : 0
+            },
+            'ddos': {
+                'name' : 'command',
+                'anum' : 0
+            }
+        }, float('inf'))
+    },
+    'vip_2': {
+        '/ddos':
+        ({
+            't': {
+                'name' : 'time',
+                'anum' : 1,
+                'atype': int,
+                'lim'  : 3600
+            },
+            'n': {
+                'name' : 'number',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            },
+            'stop': {
+                'name' : 'stop',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            }
+        }, 100),
+        '/bl':
+        ({
+            'add': {
+                'name' : 'command',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            },
+            'del': {
+                'name' : 'command',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            }
+        }, float('inf')),
+        '/info':
+        ({
+            'h': {
+                'name' : 'command',
+                'anum' : 0
+            },
+            'bl': {
+                'name' : 'command',
+                'anum' : 0
+            },
+            'ddos': {
+                'name' : 'command',
+                'anum' : 0
+            }
+        }, float('inf'))
+    },
+    'vip_3': {
+        '/ddos':
+        ({
+            't': {
+                'name' : 'time',
+                'anum' : 1,
+                'atype': int,
+                'lim'  : 3600
+            },
+            'n': {
+                'name' : 'number',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            },
+            'stop': {
+                'name' : 'number',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            }
+        }, 200),
+        '/bl':
+        ({
+            'add': {
+                'name' : 'command',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            },
+            'del': {
+                'name' : 'command',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            }
+        }, float('inf')),
+        '/info':
+        ({
+            'h': {
+                'name' : 'command',
+                'anum' : 0
+            },
+            'bl': {
+                'name' : 'command',
+                'anum' : 0
+            },
+            'ddos': {
+                'name' : 'command',
+                'anum' : 0
+            }
+        }, float('inf'))
+    },
+    'user': {
+        '/ddos':
+        ({
+            't': {
+                'name' : 'time',
+                'anum' : 1,
+                'atype': int,
+                'lim'  : 150
+            },
+            'n': {
+                'name' : 'number',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            },
+            'stop': {
+                'name' : 'stop',
+                'anum' : 1,
+                'atype': str,
+                'lim'  : -1
+            }
+        }, 15),
+        '/info':
+        ({
+            'h': {
+                'name' : 'command',
+                'anum' : 0
+            },
+            'ddos': {
+                'name' : 'command',
+                'anum' : 0
+            },
+        }, float('inf'))
     }
 }

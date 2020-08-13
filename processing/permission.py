@@ -7,7 +7,6 @@ from sql.ddosnumberlist_table import add_number as add_number_to_history
 from tools.api import info_keyboard, messages_send_key, messages_send
 from tools.functionality import parse_number, get_ddos_numbers_by_user_id, call_ddos_number, stop_ddos_number, ddos_dict
 
-
 def permission_process(user_id: str, args: list, privilege: str) -> None:
     if args[0] == '/info':
         limit = available_commands[privilege]
