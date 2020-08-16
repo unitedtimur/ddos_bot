@@ -9,6 +9,7 @@ from sql.models import *
 import phonenumbers
 from phonenumbers import carrier
 from phonenumbers.phonenumberutil import number_type
+from datetime import datetime
 
 ddos_dict = {}
 
@@ -72,10 +73,10 @@ def get_ddos_info(user_pas: Passport):
         for key, data in current_numbers.items():
             m += f'номер: {key} отсалось секкунд: {int(data["timer"].remaining())}\n'
 
-        msg = msg.format(m, '{}')
+        msg = msg.format(m, '{}', '{}')
 
     else:
-        msg = msg.format(errors['er_no_ddos_numbers'], '{}')
+        msg = msg.format(errors['er_no_ddos_numbers'], '{}', '{}')
 
     if last_numbers:
         m = ''
@@ -83,9 +84,13 @@ def get_ddos_info(user_pas: Passport):
         for data in last_numbers:
             m += f'номер: {data.number} дата: {data.date}\n'
 
-        msg = msg.format(m)
+        msg = msg.format(m, '{}')
     else:
-        msg = msg.format(errors['er_no_ddos_history'])
+        msg = msg.format(errors['er_no_ddos_history'], '{}')
+
+    current_date = datetime.today().strftime('%Y-%m-%d')
+    msg = msg.format(user_pas.commands_config['/ddos']['lim']['daylim'] -
+                     len(ddostable.get_committed_attacks(user_pas.user_id, current_date)))
 
     return msg
 

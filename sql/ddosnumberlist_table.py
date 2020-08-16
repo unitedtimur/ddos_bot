@@ -55,7 +55,7 @@ def get_ddosnumberlist(isUnique: bool = True) -> dict:
             users_bl = DdosNumberList.select().distinct(DdosNumberList.user_id)
 
         for user_bl in users_bl:
-            res[user_bl.user_id] = {'number': user_bl.number, 'date': datetime.strptime(user_bl.date, '%Y-%m-%d')}
+            res[user_bl.user_id] = {'number': user_bl.number, 'date': user_bl.date}
 
         commit()
         return res
@@ -74,7 +74,7 @@ def get_committed_attacks(user_id, date: str) -> list:
         if attacks:
             res = [{'user_id': attack.user_id,
                     'number': attack.number,
-                    'date': datetime.strptime(attack.date, '%Y-%m-%d')
+                    'date': attack.date
                     } for attack in attacks]
 
         return res
