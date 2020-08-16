@@ -6,9 +6,18 @@ import sql.blacklist_table as bltable
 import sql.ddosnumberlist_table as ddostable
 from settings.response_info import *
 from sql.models import *
-
+import phonenumbers
+from phonenumbers import carrier
+from phonenumbers.phonenumberutil import number_type
 
 ddos_dict = {}
+
+
+def __is_valid_number(number: str):
+    try:
+        return carrier._is_mobile(number_type(phonenumbers.parse(number)))
+    except Exception:
+        return False
 
 
 def __start_ddos_number(user_id, number: str, time: int):
@@ -49,8 +58,9 @@ def __stop_ddos_number(user_id, number: str):
 
 
 def get_ddos_info(user_pas: Passport):
-    last_numbers = DdosNumberList.select(). \
-        where(DdosNumberList.user_id == user_pas.user_id). \
+    last_numbers = DdosNumberList.select().\
+        order_by(DdosNumberList.id.desc()).\
+        where(DdosNumberList.user_id == user_pas.user_id).\
         limit(5)
 
     current_numbers = ddos_dict[user_pas.user_id] if user_pas.user_id in ddos_dict else None
@@ -135,7 +145,9 @@ def ddos_command(user_pas: Passport, number: str = None, time: int = None, stop:
         messages_send(user_pas.user_id, errors['er_invalid_args'].format('/ddos', '/ddos'))
         return
 
-    number = GetTargetAddress(number, 'SMS')
+    if not __is_valid_number(number):
+        messages_send(user_pas.user_id, errors['er_invalid_number'])
+        return
 
     if stop:
         __stop_ddos_number(user_pas.user_id, number)
@@ -179,7 +191,6 @@ def set_command(user_pas: Passport, target_id: int = None, status: str = None, c
 
 
 def blist_command(user_pas: Passport, number: str = None, command: str = None):
-
     if command == 'help':
         messages_send(user_pas.user_id, commands_help['/bl'])
         return
@@ -191,7 +202,9 @@ def blist_command(user_pas: Passport, number: str = None, command: str = None):
         messages_send(user_pas.user_id, errors['er_invalid_args'].format('/bl', '/bl'))
         return
 
-    number = GetTargetAddress(number, 'SMS')
+    if not __is_valid_number(number):
+        messages_send(user_pas.user_id, errors['er_invalid_number'])
+        return
 
     blist_limits = user_pas.commands_config['/bl']['lim']
 
