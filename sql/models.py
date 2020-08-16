@@ -27,7 +27,7 @@ class Users(BaseModel):
 
 class BlackList(BaseModel):
     user_id = ForeignKeyField(Users, related_name="fk_user_id", to_field="user_id", on_delete="cascade", null=False)
-    number = CharField(20, null=False)
+    number = CharField(20, null=False, unique=True)
 
     class Meta:
         db_table = "black_list"
@@ -37,6 +37,7 @@ class BlackList(BaseModel):
 class DdosNumberList(BaseModel):
     user_id = IntegerField(null=False)
     number = CharField(20, null=False)
+    date = DateField(null=False)
 
     class Meta:
         db_table = "ddos_number_list"

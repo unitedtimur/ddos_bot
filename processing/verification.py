@@ -1,4 +1,4 @@
-from settings.config import available_commands
+from settings.config import commands_config
 from sql.users_table import get_user, add_user
 from tools.api import *
 
@@ -9,12 +9,14 @@ def is_group_member(user_id) -> bool:
     return False
 
 
-def exists_user(user_id) -> None:
+def add_user_if_not_exists(user_id) -> None:
     if get_user(user_id) is None:
-        name, surname = get_fullname_by_user_id(user_id)
-        add_user(user_id, name, surname, 'user')
+        fullname = get_fullname_by_user_id(user_id)
+        if fullname is not None:
+            add_user(user_id, fullname['name'], fullname['surname'], 'user')
+
 
 def is_privilege(privilege: str) -> bool:
-    if privilege in available_commands:
+    if privilege in commands_config:
         return True
     return False

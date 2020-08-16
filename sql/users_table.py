@@ -19,14 +19,15 @@ def add_user(user_id, name, surname, privilege) -> bool:
         return False
 
 
-def rem_user(user_id) -> bool:
+def del_user(user_id) -> bool:
     """
     Remove user from users table and will removed all numbers from blacklist table\n
     Return True if removed or False if not
     """
     try:
-        user = Users.get(user_id=user_id)
-        user.delete_instance()
+        Users.get(user_id=user_id).delete_instance()
+        # user = Users.get(user_id=user_id)
+        # user.delete_instance()
         commit()
         return True
     except Exception:
@@ -34,31 +35,49 @@ def rem_user(user_id) -> bool:
         return False
 
 
-def get_users() -> list or None:
+def get_users() -> list:
     """
     Return the list of users {id : name : surname : privilege}
     """
     try:
         users = Users.select()
-        res = [f"{user.user_id} {user.name} {user.surname} {user.privilege}" for user in users]
-        commit()
+        res = []
+
+        if users:
+            res = [{
+                'user_id': user.user_id,
+                'name': user.name,
+                'surname': user.surname,
+                'privilege': user.privilege
+            } for user in users]
+            commit()
+
         return res
     except Exception:
         rollback()
-        return None
+        return []
 
 
-def get_user(user_id) -> str or None:
+def get_user(user_id) -> dict:
     """
     Return an user from users table with by user_id
     """
     try:
-        user = Users.select().where(Users.user_id == user_id)[0]
-        commit()
-        return f"{user.user_id} {user.name} {user.surname} {user.privilege}"
+        user = Users.select().where(Users.user_id == user_id)
+        res = {}
+
+        if user:
+            commit()
+            res = {'user_id': user.user_id,
+                   'name': user.name,
+                   'surname': user.surname,
+                   'privilege': user.privilege}
+
+        return res
     except Exception:
         rollback()
-        return None
+        return {}
+
 
 def get_privilege(user_id) -> str or None:
     """
@@ -71,3 +90,24 @@ def get_privilege(user_id) -> str or None:
     except Exception:
         rollback()
         return None
+
+
+def update_info(user_id, name: str = None, surname: str = None, privilege: str = None) -> bool:
+
+    data = {}
+    if name:
+        data[Users.name] = name
+    if surname:
+        data[Users.surname] = surname
+    if privilege:
+        data[Users.privilege] = privilege
+
+    try:
+        if Users.update(data).where(Users.user_id == user_id).execute():
+            commit()
+            return True
+
+        return False
+    except Exception:
+        rollback()
+        return False

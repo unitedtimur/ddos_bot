@@ -1,6 +1,5 @@
 import os
 
-
 postgres = {
     'database': os.environ['DATABASE'],
     'user': os.environ['USER'],

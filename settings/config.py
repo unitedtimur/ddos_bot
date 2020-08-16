@@ -1,62 +1,355 @@
-available_commands = {
+inf = float('inf')
+
+commands_config = {
     'admin': {
-        'ddos': {
-            'time': float("inf"),
-            'th': float("inf"),
-            'count': float("inf")
+        '/ddos': {
+            'param': {
+                't': {
+                    'name': 'time',
+                    'argnum': 1,
+                    'argtype': int,
+                    'lim': inf
+                },
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'stop': {
+                    'name': 'stop',
+                    'argnum': 0,
+                    'default': True,
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'help': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
+            },
+            'lim': {
+                'simult': inf,
+                'daylim': inf
+            }
         },
-        'bl': {
-            'add': float("inf"),
-            'rem': float("inf"),
-            'ls': 1
-        }
-    },
-    'user': {
-        'ddos': {
-            'time': 99,
-            'th': 15,
-            'count': 1
+        '/bl': {
+            'param': {
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'add': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'add',
+                    'next_param': 'n'
+                },
+                'del': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'del',
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'help': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
+            },
+            'lim': {
+                'datalim': inf
+            }
         },
-        'bl': {
-            'add': 0,
-            'rem': 0,
-            'ls': 1
-        }
-    },
-    'vip_1': {
-        'ddos': {
-            'time': 1000,
-            'th': 15,
-            'count': 2
+        '/set': {
+            'param': {
+                'id': {
+                    'name': 'target_id',
+                    'argnum': 1,
+                    'argtype': int
+                },
+                'status': {
+                    'name': 'status',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'help': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
+            },
+            'lim': {}
         },
-        'bl': {
-            'add': 2,
-            'rem': float("inf"),
-            'ls': 1
-        }
-    },
-    'vip_2': {
-        'ddos': {
-            'time': 2000,
-            'th': 15,
-            'count': 3
-        },
-        'bl': {
-            'add': 3,
-            'rem': float("inf"),
-            'ls': 1
-        }
+        '/help': {}
     },
     'vip_3': {
-        'ddos': {
-            'time': 3000,
-            'th': 15,
-            'count': 4
+        '/ddos': {
+            'param': {
+                't': {
+                    'name': 'time',
+                    'argnum': 1,
+                    'argtype': int,
+                    'lim': 3000
+                },
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'stop': {
+                    'name': 'stop',
+                    'argnum': 0,
+                    'default': True,
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'help': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
+            },
+            'lim': {
+                'simult': 4,
+                'daylim': inf
+            }
         },
-        'bl': {
-            'add': 4,
-            'rem': float("inf"),
-            'ls': 1
-        }
+        '/bl': {
+            'param': {
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'add': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'add',
+                    'next_param': 'n'
+                },
+                'del': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'del',
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'help': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
+            },
+            'lim': {
+                'datalim': 4
+            }
+        },
+        '/help': {}
+    },
+    'vip_2': {
+        '/ddos': {
+            'param': {
+                't': {
+                    'name': 'time',
+                    'argnum': 1,
+                    'argtype': int,
+                    'lim': 2000
+                },
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'stop': {
+                    'name': 'stop',
+                    'argnum': 0,
+                    'default': True,
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'help': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
+            },
+            'lim': {
+                'daylim': 40,
+                'simult': 3
+            }
+        },
+        '/bl': {
+            'param': {
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'add': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'add',
+                    'next_param': 'n'
+                },
+                'del': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'del',
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'help': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
+            },
+            'lim': {
+                'datalim': 3
+            }
+        },
+        '/help': {}
+    },
+    'vip_1': {
+        '/ddos': {
+            'param': {
+                't': {
+                    'name': 'time',
+                    'argnum': 1,
+                    'argtype': int,
+                    'lim': 1000
+                },
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'stop': {
+                    'name': 'stop',
+                    'argnum': 0,
+                    'default': True,
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'help': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
+            },
+            'lim': {
+                'daylim': 40,
+                'simult': 2
+            }
+        },
+        '/bl': {
+            'param': {
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'add': {
+                    'name': 'command',
+                    'argnum': 1,
+                    'default': 'add',
+                    'next_param': 'n'
+                },
+                'del': {
+                    'name': 'command',
+                    'argnum': 1,
+                    'default': 'del',
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'help': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
+            },
+            'lim': {
+                'datalim': 1
+            }
+        },
+        '/help': {}
+    },
+    'user': {
+        '/ddos': {
+            'param': {
+                't': {
+                    'name': 'time',
+                    'argnum': 1,
+                    'argtype': int,
+                    'lim': 99
+                },
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'stop': {
+                    'name': 'stop',
+                    'argnum': 0,
+                    'default': True,
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'help': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
+            },
+            'lim': {
+                'daylim': 10,
+                'simult': 1
+            }
+        },
+        '/help': {}
     }
 }

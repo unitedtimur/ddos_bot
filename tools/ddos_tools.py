@@ -1,5 +1,5 @@
 from time import time, sleep
-from threading import Thread
+from threading import Thread, Timer
 from humanfriendly import format_timespan
 from humanfriendly.terminal.spinners import Spinner
 
@@ -8,6 +8,24 @@ from lib.Impulse.tools.crash import CriticalError
 from lib.Impulse.tools.ipTools import GetTargetAddress
 
 """ Find & import ddos method """
+
+
+class ModTimer(Timer):
+
+    def __init__(self, interval, function, args=None, kwargs=None):
+        super().__init__(interval, function, args, kwargs)
+        self.started_at = None
+        self.interval = interval
+
+    def start(self):
+        self.started_at = time()
+        Timer.start(self)
+
+    def elapsed(self):
+        return time() - self.started_at
+
+    def remaining(self):
+        return self.interval - self.elapsed()
 
 
 def GetMethodByName(method):
@@ -21,7 +39,7 @@ def GetMethodByName(method):
         dir = f"tools.L7.{method.lower()}"
     else:
         raise SystemExit(
-            f"Unknown ddos method {repr(method)} selected.."
+                f"Unknown ddos method {repr(method)} selected.."
         )
     module = __import__(dir, fromlist=["object"])
     if hasattr(module, "flood"):
@@ -29,7 +47,7 @@ def GetMethodByName(method):
         return method
     else:
         CriticalError(
-            f"Method 'flood' not found in {repr(dir)}. Please use python 3.8", "-"
+                f"Method 'flood' not found in {repr(dir)}. Please use python 3.8", "-"
         )
 
 
@@ -46,8 +64,8 @@ class AttackMethod:
         self.target_name = target
         self.target = target
         self.threads = []
-        self.is_running = False
         self.method = flood
+        self.is_running = False
         self.target = GetTargetAddress(self.target_name, self.name)
 
     # Destructor
@@ -65,7 +83,7 @@ class AttackMethod:
 
     # Run flooder
     def __RunFlood(self):
-        while self.is_running: # TODO SHIT HERE
+        while self.is_running:  # TODO SHIT HERE
             self.method(self.target)
 
     # Start threads
@@ -82,16 +100,16 @@ class AttackMethod:
             self.threads.append(thread)
         # Start flood threads
         with Spinner(
-            label=f"Starting {self.threads_count} threads",
-            total=100,
+                label=f"Starting {self.threads_count} threads",
+                total=100,
         ) as spinner:
             for index, thread in enumerate(self.threads):
                 thread.start()
                 spinner.step(100 / len(self.threads) * (index + 1))
         # Wait flood threads for stop
-        for index, thread in enumerate(self.threads):
-            thread.join()
-            print(f"Stopped thread {index + 1}")
+        # for index, thread in enumerate(self.threads):
+        # thread.join()
+        # print(f"Stopped thread {index + 1}")
 
     # Start ddos attack
     def Start(self):
@@ -101,14 +119,14 @@ class AttackMethod:
             target = str(self.target).strip("()").replace(", ", ":").replace("'", "")
         duration = format_timespan(self.duration)
         print(f"Starting attack to {target} using method {self.name}\nAttack will be stopped after {duration}"
-        )
+              )
         self.is_running = True
         try:
             self.__RunThreads()
         except KeyboardInterrupt:
             self.is_running = False
             print(
-                f"\nC detected. Stopping {self.threads_count} threads.."
+                    f"\nC detected. Stopping {self.threads_count} threads.."
             )
             # Wait all threads for stop
             for thread in self.threads:
