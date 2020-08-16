@@ -96,8 +96,8 @@ def get_set_info(user_id: int = None):
     if user_id:
         user = get_user(user_id)
         if user:
-            msg = msg.format(f'id: {user_id}, имя: {user["name"]}, '
-                             f'фамилия: {user["surname"]}, статус: {user["privilege"]}')
+            msg = msg.format(f'id: {user_id} имя: {user["name"]} '
+                             f'фам: {user["surname"]} статус: {user["privilege"]}')
         else:
             return errors['er_no_user']
     else:
@@ -106,8 +106,8 @@ def get_set_info(user_id: int = None):
         if users:
             m = ''
             for user in users:
-                m += f'id: {user["user_id"]}, имя: {user["name"]}, '
-                f'фамилия: {user["surname"]}, статус: {user["privilege"]}\n'
+                m += f'id: {user["user_id"]} имя: {user["name"]} ' \
+                     f'фам: {user["surname"]} статус: {user["privilege"]}\n'
 
             msg = msg.format(m)
 

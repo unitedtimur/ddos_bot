@@ -25,9 +25,7 @@ def del_user(user_id) -> bool:
     Return True if removed or False if not
     """
     try:
-        Users.get(user_id=user_id).delete_instance()
-        # user = Users.get(user_id=user_id)
-        # user.delete_instance()
+        Users.get(Users.user_id == user_id).delete_instance()
         commit()
         return True
     except Exception:
@@ -63,7 +61,7 @@ def get_user(user_id) -> dict:
     Return an user from users table with by user_id
     """
     try:
-        user = Users.select().where(Users.user_id == user_id)
+        user = Users.get(Users.user_id == user_id)
         res = {}
 
         if user:
@@ -84,9 +82,10 @@ def get_privilege(user_id) -> str or None:
     Return the privilege from users table by user_id
     """
     try:
-        user = Users.select().where(Users.user_id == user_id)[0]
+        user = Users.get(Users.user_id == user_id)
         commit()
-        return str(user.privilege)
+        return user.privilege
+
     except Exception:
         rollback()
         return None
