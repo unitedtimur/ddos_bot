@@ -26,7 +26,7 @@ commands_config = {
                     'argnum': 0,
                     'default': 'info'
                 },
-                'h': {
+                'help': {
                     'name': 'command',
                     'argnum': 0,
                     'default': 'help'
@@ -61,7 +61,7 @@ commands_config = {
                     'argnum': 0,
                     'default': 'info'
                 },
-                'h': {
+                'help': {
                     'name': 'command',
                     'argnum': 0,
                     'default': 'help'
@@ -78,7 +78,7 @@ commands_config = {
                     'argnum': 1,
                     'argtype': int
                 },
-                'stat': {
+                'status': {
                     'name': 'status',
                     'argnum': 1,
                     'argtype': str
@@ -88,7 +88,7 @@ commands_config = {
                     'argnum': 0,
                     'default': 'info'
                 },
-                'h': {
+                'help': {
                     'name': 'command',
                     'argnum': 0,
                     'default': 'help'
@@ -123,7 +123,7 @@ commands_config = {
                     'argnum': 0,
                     'default': 'info'
                 },
-                'h': {
+                'help': {
                     'name': 'command',
                     'argnum': 0,
                     'default': 'help'
@@ -158,7 +158,7 @@ commands_config = {
                     'argnum': 0,
                     'default': 'info'
                 },
-                'h': {
+                'help': {
                     'name': 'command',
                     'argnum': 0,
                     'default': 'help'
@@ -195,7 +195,7 @@ commands_config = {
                     'argnum': 0,
                     'default': 'info'
                 },
-                'h': {
+                'help': {
                     'name': 'command',
                     'argnum': 0,
                     'default': 'help'
@@ -230,7 +230,7 @@ commands_config = {
                     'argnum': 0,
                     'default': 'info'
                 },
-                'h': {
+                'help': {
                     'name': 'command',
                     'argnum': 0,
                     'default': 'help'
@@ -267,7 +267,7 @@ commands_config = {
                     'argnum': 0,
                     'default': 'info'
                 },
-                'h': {
+                'help': {
                     'name': 'command',
                     'argnum': 0,
                     'default': 'help'
@@ -302,7 +302,7 @@ commands_config = {
                     'argnum': 0,
                     'default': 'info'
                 },
-                'h': {
+                'help': {
                     'name': 'command',
                     'argnum': 0,
                     'default': 'help'
@@ -339,7 +339,7 @@ commands_config = {
                     'argnum': 0,
                     'default': 'info'
                 },
-                'h': {
+                'help': {
                     'name': 'command',
                     'argnum': 0,
                     'default': 'help'

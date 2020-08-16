@@ -3,8 +3,6 @@ from sql.ddosnumberlist_table import *
 from inspect import signature
 from datetime import datetime
 from processing.commands import *
-from itertools import chain
-
 
 class ReqHandler:
 
