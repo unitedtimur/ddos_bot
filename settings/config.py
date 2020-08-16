@@ -1,313 +1,355 @@
-from enum import Enum
-
-available_commands = {
-    'admin': {
-        'ddos': {
-            'time': float("inf"),
-            'th': float("inf"),
-            'count': float("inf")
-        },
-        'bl': {
-            'add': float("inf"),
-            'rem': float("inf"),
-            'ls': 1
-        }
-    },
-    'user': {
-        'ddos': {
-            'time': 99,
-            'th': 15,
-            'count': 1
-        },
-        'bl': {
-            'add': 0,
-            'rem': 0,
-            'ls': 1
-        }
-    },
-    'vip_1': {
-        'ddos': {
-            'time': 1000,
-            'th': 15,
-            'count': 2
-        },
-        'bl': {
-            'add': 2,
-            'rem': float("inf"),
-            'ls': 1
-        }
-    },
-    'vip_2': {
-        'ddos': {
-            'time': 2000,
-            'th': 15,
-            'count': 3
-        },
-        'bl': {
-            'add': 3,
-            'rem': float("inf"),
-            'ls': 1
-        }
-    },
-    'vip_3': {
-        'ddos': {
-            'time': 3000,
-            'th': 15,
-            'count': 4
-        },
-        'bl': {
-            'add': 4,
-            'rem': float("inf"),
-            'ls': 1
-        }
-    }
-}
+inf = float('inf')
 
 commands_config = {
-    'admin' : {
-        '/ddos' :
-        ({
-            't': {
-                'name' : 'time',
-                'anum' : 1,
-                'atype': int,
-                'lim'  : float('inf')
+    'admin': {
+        '/ddos': {
+            'param': {
+                't': {
+                    'name': 'time',
+                    'argnum': 1,
+                    'argtype': int,
+                    'lim': inf
+                },
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'stop': {
+                    'name': 'stop',
+                    'argnum': 0,
+                    'default': True,
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'h': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
             },
-            'n': {
-                'name' : 'number',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
-            },
-            'stop': {
-                'name' : 'stop',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
+            'lim': {
+                'simult': inf,
+                'daylim': inf
             }
-        }, float('inf')),
-        '/bl':
-        ({
-            'add': {
-                'name' : 'command',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
+        },
+        '/bl': {
+            'param': {
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'add': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'add',
+                    'next_param': 'n'
+                },
+                'del': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'del',
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'h': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
             },
-            'del': {
-                'name' : 'command',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
+            'lim': {
+                'datalim': inf
             }
-        }, float('inf')),
-        '/info':
-        ({
-            'h': {
-                'name' : 'command',
-                'anum' : 0
+        },
+        '/set': {
+            'param': {
+                'id': {
+                    'name': 'target_id',
+                    'argnum': 1,
+                    'argtype': int
+                },
+                'stat': {
+                    'name': 'status',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'h': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
             },
-            'bl': {
-                'name' : 'command',
-                'anum' : 0
-            },
-            'ddos': {
-                'name' : 'command',
-                'anum' : 0
-            },
-        }, float('inf'))
-    },
-    'vip_1': {
-        '/ddos':
-        ({
-            't': {
-                'name' : 'time',
-                'anum' : 1,
-                'atype': int,
-                'lim'  : 3600
-            },
-            'n': {
-                'name' : 'number',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
-            },
-            'stop': {
-                'name' : 'stop',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
-            }
-        }, 50),
-        '/bl':
-        ({
-            'add': {
-                'name' : 'command',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
-            },
-            'del': {
-                'name' : 'command',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
-            }
-        }, float('inf')),
-        '/info':
-        ({
-            'h': {
-                'name' : 'command',
-                'anum' : 0
-            },
-            'bl': {
-                'name' : 'command',
-                'anum' : 0
-            },
-            'ddos': {
-                'name' : 'command',
-                'anum' : 0
-            }
-        }, float('inf'))
-    },
-    'vip_2': {
-        '/ddos':
-        ({
-            't': {
-                'name' : 'time',
-                'anum' : 1,
-                'atype': int,
-                'lim'  : 3600
-            },
-            'n': {
-                'name' : 'number',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
-            },
-            'stop': {
-                'name' : 'stop',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
-            }
-        }, 100),
-        '/bl':
-        ({
-            'add': {
-                'name' : 'command',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
-            },
-            'del': {
-                'name' : 'command',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
-            }
-        }, float('inf')),
-        '/info':
-        ({
-            'h': {
-                'name' : 'command',
-                'anum' : 0
-            },
-            'bl': {
-                'name' : 'command',
-                'anum' : 0
-            },
-            'ddos': {
-                'name' : 'command',
-                'anum' : 0
-            }
-        }, float('inf'))
+            'lim': {}
+        },
+        '/help': {}
     },
     'vip_3': {
-        '/ddos':
-        ({
-            't': {
-                'name' : 'time',
-                'anum' : 1,
-                'atype': int,
-                'lim'  : 3600
+        '/ddos': {
+            'param': {
+                't': {
+                    'name': 'time',
+                    'argnum': 1,
+                    'argtype': int,
+                    'lim': 3000
+                },
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'stop': {
+                    'name': 'stop',
+                    'argnum': 0,
+                    'default': True,
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'h': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
             },
-            'n': {
-                'name' : 'number',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
-            },
-            'stop': {
-                'name' : 'number',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
+            'lim': {
+                'simult': 4,
+                'daylim': inf
             }
-        }, 200),
-        '/bl':
-        ({
-            'add': {
-                'name' : 'command',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
+        },
+        '/bl': {
+            'param': {
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'add': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'add',
+                    'next_param': 'n'
+                },
+                'del': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'del',
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'h': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
             },
-            'del': {
-                'name' : 'command',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
+            'lim': {
+                'datalim': 4
             }
-        }, float('inf')),
-        '/info':
-        ({
-            'h': {
-                'name' : 'command',
-                'anum' : 0
+        },
+        '/help': {}
+    },
+    'vip_2': {
+        '/ddos': {
+            'param': {
+                't': {
+                    'name': 'time',
+                    'argnum': 1,
+                    'argtype': int,
+                    'lim': 2000
+                },
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'stop': {
+                    'name': 'stop',
+                    'argnum': 0,
+                    'default': True,
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'h': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
             },
-            'bl': {
-                'name' : 'command',
-                'anum' : 0
-            },
-            'ddos': {
-                'name' : 'command',
-                'anum' : 0
+            'lim': {
+                'daylim': 40,
+                'simult': 3
             }
-        }, float('inf'))
+        },
+        '/bl': {
+            'param': {
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'add': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'add',
+                    'next_param': 'n'
+                },
+                'del': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'del',
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'h': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
+            },
+            'lim': {
+                'datalim': 3
+            }
+        },
+        '/help': {}
+    },
+    'vip_1': {
+        '/ddos': {
+            'param': {
+                't': {
+                    'name': 'time',
+                    'argnum': 1,
+                    'argtype': int,
+                    'lim': 1000
+                },
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'stop': {
+                    'name': 'stop',
+                    'argnum': 0,
+                    'default': True,
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'h': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
+            },
+            'lim': {
+                'daylim': 40,
+                'simult': 2
+            }
+        },
+        '/bl': {
+            'param': {
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'add': {
+                    'name': 'command',
+                    'argnum': 1,
+                    'default': 'add',
+                    'next_param': 'n'
+                },
+                'del': {
+                    'name': 'command',
+                    'argnum': 1,
+                    'default': 'del',
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'h': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
+            },
+            'lim': {
+                'datalim': 1
+            }
+        },
+        '/help': {}
     },
     'user': {
-        '/ddos':
-        ({
-            't': {
-                'name' : 'time',
-                'anum' : 1,
-                'atype': int,
-                'lim'  : 150
+        '/ddos': {
+            'param': {
+                't': {
+                    'name': 'time',
+                    'argnum': 1,
+                    'argtype': int,
+                    'lim': 99
+                },
+                'n': {
+                    'name': 'number',
+                    'argnum': 1,
+                    'argtype': str
+                },
+                'stop': {
+                    'name': 'stop',
+                    'argnum': 0,
+                    'default': True,
+                    'next_param': 'n'
+                },
+                'info': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'info'
+                },
+                'h': {
+                    'name': 'command',
+                    'argnum': 0,
+                    'default': 'help'
+                }
             },
-            'n': {
-                'name' : 'number',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
-            },
-            'stop': {
-                'name' : 'stop',
-                'anum' : 1,
-                'atype': str,
-                'lim'  : -1
+            'lim': {
+                'daylim': 10,
+                'simult': 1
             }
-        }, 15),
-        '/info':
-        ({
-            'h': {
-                'name' : 'command',
-                'anum' : 0
-            },
-            'ddos': {
-                'name' : 'command',
-                'anum' : 0
-            },
-        }, float('inf'))
+        },
+        '/help': {}
     }
 }

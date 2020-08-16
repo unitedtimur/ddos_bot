@@ -1,5 +1,6 @@
 from sql.models import DdosNumberList
 from sql.operations import commit, rollback
+from datetime import datetime
 
 
 def add_number(user_id, number: str) -> bool:
@@ -8,48 +9,75 @@ def add_number(user_id, number: str) -> bool:
         Return True if added, or False if not
         """
     try:
-        DdosNumberList.create(user_id=user_id,
-                              number=number.lower().strip('+'))
-        commit()
-        return True
+        if DdosNumberList.insert(user_id=user_id,
+                                 number=number,
+                                 date=datetime.today().strftime('%Y-%m-%d')):
+            commit()
+            return True
+
+        return False
     except Exception:
         rollback()
         return False
 
 
-def rem_number(user_id, number: str) -> bool:
+def del_number(user_id, number: str) -> bool:
     """
     Remove number from ddos_number_list table\n
     Return True if removed or False if not
     """
     try:
-        i = 0
-        for user_bl in DdosNumberList.select().where((DdosNumberList.user_id == user_id) &
-                                                     (DdosNumberList.number == number.lower().strip('+'))):
-            user_bl.delete_instance()
-            i += 1
-        commit()
-        if i == 0:
-            return False
-        return True
+        numbers = DdosNumberList.select().where((DdosNumberList.user_id == user_id) &
+                                                (DdosNumberList.number == number))
+        if numbers:
+            for user_bl in numbers:
+                user_bl.delete_instance()
+            commit()
+            return True
+
+        return False
     except Exception:
         rollback()
         return False
 
 
-def get_ddosnumberlist(isUnique: bool = True) -> dict or None:
+def get_ddosnumberlist(isUnique: bool = True) -> dict:
     """
     Return the list of blacklist table {id : number}
     """
     try:
-        numberList = DdosNumberList.select()
+        users_bl = None
+        res = {}
+
         if isUnique:
-            res = dict()
-            for row in numberList: res[f"{row.user_id}"] = row.number
+            users_bl = DdosNumberList.select()
         else:
-            res = [f"{row.user_id} {row.number}" for row in numberList]
+            users_bl = DdosNumberList.select().distinct(DdosNumberList.user_id)
+
+        for user_bl in users_bl:
+            res[user_bl.user_id] = {'number': user_bl.number, 'date': datetime.strptime(user_bl.date, '%Y-%m-%d')}
+
         commit()
         return res
     except Exception:
         rollback()
-        return None
+        return {}
+
+
+def get_committed_attacks(user_id, date: str) -> list:
+    try:
+
+        attacks = DdosNumberList.select().where((DdosNumberList.user_id == user_id) &
+                                                (DdosNumberList.date == date))
+        res = []
+
+        if attacks:
+            res = [{'user_id': attack.user_id,
+                    'number': attack.number,
+                    'date': datetime.strptime(attack.date, '%Y-%m-%d')
+                    } for attack in attacks]
+
+        return res
+    except Exception:
+        rollback()
+        return []
