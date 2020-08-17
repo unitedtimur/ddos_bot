@@ -75,19 +75,3 @@ def get_numbers(user_id) -> list:
     except Exception:
         rollback()
         return []
-
-def is_in_bl(number: str) -> bool:
-
-    try:
-        bl_numbers = BlackList.select(BlackList.number)
-
-        if bl_numbers:
-            commit()
-            for bl_number in bl_numbers:
-                if number == bl_number.number:
-                    return True
-
-        return False
-    except Exception:
-        rollback()
-        return False

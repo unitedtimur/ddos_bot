@@ -20,7 +20,6 @@ class Bot:
             if event.type == VkBotEventType.MESSAGE_NEW:
                 self.handler.handle(event.message.from_id, event.message.text)
 
-
 if __name__ == "__main__":
     init_database_connection()
     bot = Bot(LONGPOLL, ReqHandler())
