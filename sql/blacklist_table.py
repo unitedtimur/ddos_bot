@@ -8,75 +8,86 @@ def add_number(user_id, number) -> bool:
     Return True if added, or False if not
     """
     try:
-        BlackList.create(user_id=user_id,
-                         number=number.lower().strip('+'))
+        BlackList.create(user_id=user_id, number=number)
         commit()
         return True
+
     except Exception:
         rollback()
         return False
 
 
-def rem_number(user_id, number: str) -> bool:
+def del_number(user_id, number: str) -> bool:
     """
     Remove number from blacklist table\n
     Return True if removed or False if not
     """
     try:
-        i = 0
-        for user_bl in BlackList.select().where((BlackList.user_id == user_id) &
-                                                (BlackList.number == number.lower().strip('+'))):
-            user_bl.delete_instance()
-            i += 1
-        commit()
-        if i == 0:
-            return False
-        return True
+        numbers = BlackList.select().where((BlackList.user_id == user_id) & (BlackList.number == number))
+        if numbers:
+            for user_bl in numbers:
+                user_bl.delete_instance()
+            commit()
+            return True
+
+        return False
     except Exception:
         rollback()
         return False
 
 
-def get_blacklist(isUnique: bool = True) -> dict or None:
+def get_blacklist(isUnique: bool = True) -> dict:
     """
     Return the list of blacklist table {id : number}
     """
     try:
-        users_bl = BlackList.select()
+        users_bl = None
+        res = {}
+
         if isUnique:
-            res = dict()
-            for row in users_bl: res[f"{row.user_id}"] = row.number
+            users_bl = BlackList.select()
         else:
-            res = [f"{row.user_id} {row.number}" for row in users_bl]
+            users_bl = BlackList.select().distinct(BlackList.user_id)
+
+        for user_bl in users_bl:
+            res[user_bl.user_id] = user_bl.number
+
         commit()
         return res
     except Exception:
         rollback()
-        return None
+        return {}
 
 
-def get_number(user_id):
+def get_numbers(user_id) -> list:
     """
     Return a number or numbers
     """
     try:
         numbers = BlackList.select().where(BlackList.user_id == user_id)
-        res = [f"{number.user_id} {number.number}" for number in numbers]
-        commit()
+        res = []
+
+        if numbers:
+            res = [{'user_id': number.user_id, 'number': number.number} for number in numbers]
+            commit()
+
         return res
     except Exception:
         rollback()
-        return list()
+        return []
 
-def get_numbers() -> list:
-    """
-    Return list of numbers
-    """
+def is_in_bl(number: str) -> bool:
+
     try:
-        numbers = BlackList.select()
-        list = []
-        for num in numbers: list.append(num.number)
-        return list
-        commit()
+        bl_numbers = BlackList.select(BlackList.number)
+
+        if bl_numbers:
+            commit()
+            for bl_number in bl_numbers:
+                if number == bl_number.number:
+                    return True
+
+        return False
     except Exception:
         rollback()
+        return False

@@ -19,12 +19,12 @@ def get_random_id():
     return random.getrandbits(31) * random.choice([-1, 1])
 
 
-def get_fullname_by_user_id(user_id) -> tuple:
+def get_fullname_by_user_id(user_id) -> dict or None:
     try:
         response = API.method('users.get', {'user_ids': user_id})[0]
-        return (response["first_name"], response['last_name'])
+        return {'name': response['first_name'], 'surname': response['last_name']}
     except Exception:
-        return ('unknown',)
+        return None
 
 
 def messages_send(user_id, message) -> None:
