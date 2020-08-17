@@ -2,14 +2,14 @@ from threading import Thread
 
 from settings.config import available_commands
 from settings.response_info import info, errors, priv_info
-from sql.blacklist_table import get_number, add_number, rem_number, get_numbers
+from sql.blacklist_table import get_number, add_number, rem_number
 from sql.ddosnumberlist_table import add_number as add_number_to_history
 from tools.api import info_keyboard, messages_send_key, messages_send
 from tools.functionality import parse_number, get_ddos_numbers_by_user_id, call_ddos_number, stop_ddos_number, ddos_dict
 
 
 def permission_process(user_id: str, args: list, privilege: str) -> None:
-    if args[0] == '/info' or args[0] == 'начать' or args[0] == 'start':
+    if args[0] == '/info':
         limit = available_commands[privilege]
         messages_send(user_id, priv_info['general']['ddos'].format(limit['ddos']['time'], limit['ddos']['count']))
         if privilege != 'user':
@@ -54,10 +54,6 @@ def ddos(user_id: str, args: list, privilege: str):
     if num is None:
         messages_send_key(user_id, errors['er_invalid_number'], info_keyboard())
         return
-
-    if num in get_numbers():
-        messages_send_key(user_id, errors['er_in_black_list'], info_keyboard())
-        return 
 
     time = int(args[2])
     limits = available_commands[privilege]['ddos']
